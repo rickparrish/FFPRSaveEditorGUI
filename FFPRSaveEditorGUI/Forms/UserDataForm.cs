@@ -1,18 +1,18 @@
 ﻿// TODOX List:
 // - Add a cancel button, which should prompt to confirm throwing away changes
 
-using FFPRSaveEditor.Common.Models.BaseModels;
+using FFPRSaveEditor.Common.Models;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class UserDataForm : Form {
-        private SaveGame save;
+        private BaseSaveGame save;
         private UserData userData;
 
         public UserDataForm() {
             InitializeComponent();
         }
 
-        public UserDataForm(SaveGame save) {
+        public UserDataForm(BaseSaveGame save) {
             InitializeComponent();
 
             this.save = save;

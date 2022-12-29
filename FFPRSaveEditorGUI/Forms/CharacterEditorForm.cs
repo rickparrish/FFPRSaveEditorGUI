@@ -4,7 +4,7 @@
 // - Add a button to max the stats for the selected character
 // - Add a button to max the stats for all characters
 
-using FFPRSaveEditor.Common.Models.BaseModels;
+using FFPRSaveEditor.Common.Models;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Data;

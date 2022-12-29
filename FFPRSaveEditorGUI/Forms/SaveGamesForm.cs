@@ -1,4 +1,5 @@
 ﻿using FFPRSaveEditor.Common;
+using FFPRSaveEditor.Common.Models;
 using Newtonsoft.Json;
 
 namespace FFPRSaveEditorGUI.Forms {
@@ -45,7 +46,7 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 // Confirm it's a save and not a settings file
                 if (jsonData.Contains("userData")) {
-                    var save = JsonConvert.DeserializeObject<FFPRSaveEditor.Common.Models.BaseModels.SaveGame2>(jsonData);
+                    var save = JsonConvert.DeserializeObject<BaseSaveGame2>(jsonData);
 
                     var lvi = new ListViewItem();
 
@@ -79,7 +80,7 @@ namespace FFPRSaveEditorGUI.Forms {
                 string jsonData = SaveGame.Decrypt(encryptedData);
                 var save = JsonConvert.DeserializeObject(jsonData, saveType);
 
-                using (var form = new UserDataForm((FFPRSaveEditor.Common.Models.BaseModels.SaveGame)save)) {
+                using (var form = new UserDataForm((BaseSaveGame)save)) {
                     if (form.ShowDialog() == DialogResult.OK) {
                         jsonData = JsonConvert.SerializeObject(save);
                         encryptedData = SaveGame.Encrypt(jsonData);

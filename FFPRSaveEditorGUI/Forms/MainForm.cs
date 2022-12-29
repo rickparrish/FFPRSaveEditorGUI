@@ -1,3 +1,5 @@
+using FFPRSaveEditor.Common.Models;
+
 namespace FFPRSaveEditorGUI.Forms {
     public partial class MainForm : Form {
         public MainForm() {
@@ -5,7 +7,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void pbFF1_DoubleClick(object sender, EventArgs e) {
-            ShowSaveGamesForm("Final Fantasy PR", typeof(FFPRSaveEditor.Common.Models.FF1Models.SaveGame));
+            ShowSaveGamesForm("Final Fantasy PR", typeof(FF1SaveGame));
         }
 
         private void pbFF2_DoubleClick(object sender, EventArgs e) {
@@ -17,7 +19,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void pbFF4_DoubleClick(object sender, EventArgs e) {
-            ShowSaveGamesForm("Final Fantasy IV PR", typeof(FFPRSaveEditor.Common.Models.FF4Models.SaveGame));
+            ShowSaveGamesForm("Final Fantasy IV PR", typeof(FF4SaveGame));
         }
 
         private void pbFF5_DoubleClick(object sender, EventArgs e) {
@@ -25,7 +27,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void pbFF6_DoubleClick(object sender, EventArgs e) {
-            ShowSaveGamesForm("Final Fantasy VI PR", typeof(FFPRSaveEditor.Common.Models.FF6Models.SaveGame));
+            ShowSaveGamesForm("Final Fantasy VI PR", typeof(FF6SaveGame));
         }
 
         private void ShowSaveGamesForm(string ffDirectoryName, Type saveType) {
