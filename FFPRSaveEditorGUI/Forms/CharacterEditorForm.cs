@@ -1,17 +1,13 @@
 ﻿// In FF1 parameter.currentMpCountList and addtionalMaxMpCountList has an array for the MP available at each level
 
+// TODOX List:
+// - Add a button to max the stats for the selected character
+// - Add a button to max the stats for all characters
+
 using FFPRSaveEditor.Common.Models.BaseModels;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class CharacterEditorForm : Form {

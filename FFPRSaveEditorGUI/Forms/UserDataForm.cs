@@ -1,13 +1,7 @@
-﻿using FFPRSaveEditor.Common.Models.BaseModels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// TODOX List:
+// - Add a cancel button, which should prompt to confirm throwing away changes
+
+using FFPRSaveEditor.Common.Models.BaseModels;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class UserDataForm : Form {
