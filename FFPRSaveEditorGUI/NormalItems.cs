@@ -1,5 +1,23 @@
 ﻿namespace FFPRSaveEditorGUI {
     public class NormalItems {
+        public static string GetName(int contentId, Type saveType) {
+            if (saveType.FullName.Contains("FF1")) {
+                return FF1Items.ContainsKey(contentId) ? FF1Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else if (saveType.FullName.Contains("FF2")) {
+                return FF2Items.ContainsKey(contentId) ? FF2Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else if (saveType.FullName.Contains("FF3")) {
+                return FF3Items.ContainsKey(contentId) ? FF3Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else if (saveType.FullName.Contains("FF4")) {
+                return FF4Items.ContainsKey(contentId) ? FF4Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else if (saveType.FullName.Contains("FF5")) {
+                return FF5Items.ContainsKey(contentId) ? FF5Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else if (saveType.FullName.Contains("FF6")) {
+                return FF6Items.ContainsKey(contentId) ? FF6Items[contentId] : $"Unknown Item #{contentId:d3}";
+            } else {
+                return $"Unknown Item #{contentId:d3}";
+            }
+        }
+        
         public static Dictionary<int, string> FF1Items = new Dictionary<int, string>() {
             { 2, "Potion" },
             { 3, "Hi-Potion" },
@@ -62,12 +80,203 @@
             { 202, "Protect Ring" },
         };
 
-        public static string GetName(int contentId, Type saveType) {
-            if (saveType.FullName.Contains("FF1")) {
-                return FF1Items.ContainsKey(contentId) ? FF1Items[contentId] : $"Unknown Item #{contentId:d3}";
-            } else {
-                return $"Unknown Item #{contentId:d3}";
-            }
-        }
+        // TODOX No items for FF2 yet
+        public static Dictionary<int, string> FF2Items = new Dictionary<int, string>() {
+        };
+
+        // TODOX No items for FF3 yet
+        public static Dictionary<int, string> FF3Items = new Dictionary<int, string>() {
+        };
+
+        public static Dictionary<int, string> FF4Items = new Dictionary<int, string>() {
+            { 2, "Potion" },
+            { 3, "Hi-Potion" },
+            { 4, "X-Potion" },
+            { 5, "Ether" },
+            { 6, "Dry Ether" },
+            { 7, "Elixir" },
+            { 9, "Phoenix Down" },
+            { 10, "Gold Needle" },
+            { 11, "Maiden's Kiss" },
+            { 12, "Mallet" },
+            { 13, "Diet Food" },
+            { 14, "Echo Herbs" },
+            { 15, "Eye Drops" },
+            { 16, "Antidote" },
+            { 17, "Cross" },
+            { 18, "Remedy" },
+            { 19, "Alarm Clock" },
+            { 20, "Unicorn Horn" },
+            { 21, "Tent" },
+            { 22, "Cottage" },
+            { 23, "Emergency Exit" },
+            { 24, "Dwarven Bread" },
+            { 25, "Gysahl Greens" },
+            { 26, "Gysahl Whistle" },
+            { 29, "Soma Drop" },
+            { 30, "Siren" },
+            { 33, "Red Fang" },
+            { 34, "White Fang" },
+            { 35, "Blue Fang" },
+            { 36, "Bomb Fragment" },
+            { 37, "Bomb Arm" },
+            { 38, "Antarctic Wind" },
+            { 39, "Arctic Wind" },
+            { 40, "Zeus's Wrath" },
+            { 41, "Rage of the Gods" },
+            { 43, "Bomb Core" },
+            { 44, "Stardust" },
+            { 45, "Lilith's Kiss" },
+            { 46, "Vampire Fang" },
+            { 47, "Spider's Silk" },
+            { 48, "Bell of Silence" },
+            { 49, "Coeurl Whisker" },
+            { 50, "Bestiary" },
+            { 51, "Hourglass" },
+            { 52, "Silver Hourglass" },
+            { 54, "Bacchus's Cider" },
+            { 55, "Hermes Shoes" },
+            { 56, "Decoy" },
+            { 57, "Light Curtain" },
+            { 58, "Lunar Curtain" },
+            { 127, "N/A (Unequipped weapon)" },
+            { 132, "Light Sword" },
+            { 133, "Excalibur" },
+            { 134, "Ragnarok" },
+            { 135, "Ancient Sword" },
+            { 136, "Blood Sword" },
+            { 137, "Mythril Sword" },
+            { 138, "Sleep Blade" },
+            { 139, "Flame Sword" },
+            { 140, "Icebrand" },
+            { 142, "Avenger" },
+            { 143, "Defender" },
+            { 149, "Wind Spear" },
+            { 150, "Fire Lance" },
+            { 151, "Ice Lance" },
+            { 152, "Blood Lance" },
+            { 153, "Gungnir" },
+            { 154, "Wyvern Lance" },
+            { 155, "Holy Lance" },
+            { 156, "Mythril Knife" },
+            { 158, "Mage Masher" },
+            { 159, "Knife" },
+            { 160, "Dreamer's Harp" },
+            { 161, "Lamia's Harp" },
+            { 164, "Thunder Claw" },
+            { 165, "Fairy Claw" },
+            { 166, "Hell Claw" },
+            { 167, "Cat Claw" },
+            { 169, "Mythril Hammer" },
+            { 170, "Gaia Hammer" },
+            { 171, "Dwarven Axe" },
+            { 172, "Ogrekiller" },
+            { 173, "Poison Axe" },
+            { 175, "Kunai" },
+            { 176, "Ashura" },
+            { 177, "Kotetsu" },
+            { 178, "Kikuichimonji" },
+            { 179, "Murasame" },
+            { 180, "Masamune" },
+            { 186, "Rod of Change" },
+            { 187, "Fairy Rod" },
+            { 188, "Stardust Rod" },
+            { 189, "Staff" },
+            { 190, "Healing Staff" },
+            { 191, "Mythril Staff" },
+            { 193, "Kinesis Staff" },
+            { 194, "Sage's Staff" },
+            { 198, "Great Bow" },
+            { 199, "Killer Bow" },
+            { 200, "Elven Bow" },
+            { 201, "Yoichi's Bow" },
+            { 205, "Holy Arrow" },
+            { 206, "Fire Arrow" },
+            { 207, "Ice Arrow" },
+            { 208, "Thunder Arrow" },
+            { 209, "Blinding Arrow" },
+            { 210, "Poison Arrow" },
+            { 211, "Mute Arrow" },
+            { 212, "Angel Arrow" },
+            { 213, "Yoichi Arrow" },
+            { 214, "Artemis Arrow" },
+            { 215, "Whip" },
+            { 216, "Chain Whip" },
+            { 218, "Flame Whip" },
+            { 221, "Moonring Blade" },
+            { 222, "Shuriken" },
+            { 223, "Fuma Shuriken" },
+            { 224, "N/A (Unequipped shield)" },
+            { 225, "N/A (Unequipped body)" },
+            { 226, "N/A (Unequipped head)" },
+            { 227, "N/A (Unequipped arms)" },
+            { 230, "Demon Shield" },
+            { 231, "Light Shield" },
+            { 232, "Mythril Shield" },
+            { 233, "Flame Shield" },
+            { 234, "Ice Shield" },
+            { 235, "Diamond Shield" },
+            { 237, "Genji Shield" },
+            { 238, "Dragon Shield" },
+            { 239, "Crystal Shield" },
+            { 241, "Leather Cap" },
+            { 242, "Headband" },
+            { 243, "Feathered Cap" },
+            { 245, "Wizard's Hat" },
+            { 246, "Green Beret" },
+            { 247, "Dark Helm" },
+            { 249, "Sage's Miter" },
+            { 250, "Black Cowl" },
+            { 251, "Demon Helm" },
+            { 252, "Light Helm" },
+            { 253, "Gold Hairpin" },
+            { 254, "Mythril Helm" },
+            { 255, "Diamond Helm" },
+            { 256, "Ribbon" },
+            { 257, "Genji Helm" },
+            { 258, "Dragon Helm" },
+            { 259, "Crystal Helm" },
+            { 265, "Bard's Tunic" },
+            { 266, "Gaia Gear" },
+            { 269, "Sage's Surplice" },
+            { 270, "Kenpo Gi" },
+            { 273, "Demon Armor" },
+            { 274, "Black Belt Gi" },
+            { 275, "Knight's Amor" },
+            { 276, "Light Robe" },
+            { 277, "Mythril Armor" },
+            { 278, "Flame Mail" },
+            { 280, "Ice Armour" },
+            { 281, "White Robe" },
+            { 282, "Diamond Armour" },
+            { 283, "Minerva Bustier" },
+            { 284, "Genji Armour" },
+            { 285, "Dragon Mail" },
+            { 286, "Black Garb" },
+            { 287, "Crystal Mail" },
+            { 288, "Adamant Armor" },
+            { 290, "Ruby Ring" },
+            { 295, "Power Armlet" },
+            { 297, "Demon Gloves" },
+            { 298, "Silver Armlet" },
+            { 300, "Rune Armlet" },
+            { 301, "Mythril Gloves" },
+            { 302, "Diamond Armlet" },
+            { 303, "Diamond Gloves" },
+            { 304, "Genji Gloves" },
+            { 305, "Dragon Gloves" },
+            { 306, "Giant's Gloves" },
+            { 307, "Crystal Gloves" },
+            { 308, "Protect Ring" },
+            { 520, "Grimoire" },
+        };
+
+        // TODOX No items for FF5 yet
+        public static Dictionary<int, string> FF5Items = new Dictionary<int, string>() {
+        };
+
+        // TODOX No items for FF6 yet
+        public static Dictionary<int, string> FF6Items = new Dictionary<int, string>() {
+        };
     }
 }
