@@ -12,4 +12,10 @@
     <ProjectReference Include="..\..\FFPRSaveEditor\FFPRSaveEditor.Common\FFPRSaveEditor.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\ItemEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

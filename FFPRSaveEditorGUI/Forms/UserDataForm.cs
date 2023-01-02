@@ -27,6 +27,12 @@ namespace FFPRSaveEditorGUI.Forms {
             }
         }
 
+        private void cmdItemEditor_Click(object sender, EventArgs e) {
+            using (var form = new ItemEditorForm(userData.normalOwnedItemList.target, save.GetType())) {
+                form.ShowDialog();
+            }
+        }
+
         private void lblGil_Click(object sender, EventArgs e) {
             userData.owendGil = Helpers.GetInt("Enter a new Gil/Gold amount", "Gil/Gold", userData.owendGil);
             UpdateDisplay();

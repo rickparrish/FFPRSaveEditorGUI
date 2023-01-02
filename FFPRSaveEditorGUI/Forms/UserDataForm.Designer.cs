@@ -28,6 +28,7 @@
             this.cmdSave = new System.Windows.Forms.Button();
             this.pbScreen = new System.Windows.Forms.PictureBox();
             this.cmdCharacterEditor = new System.Windows.Forms.Button();
+            this.cmdItemEditor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,15 +79,27 @@
             this.cmdCharacterEditor.Name = "cmdCharacterEditor";
             this.cmdCharacterEditor.Size = new System.Drawing.Size(140, 23);
             this.cmdCharacterEditor.TabIndex = 4;
-            this.cmdCharacterEditor.Text = "&CharacterEditor";
+            this.cmdCharacterEditor.Text = "&Character Editor";
             this.cmdCharacterEditor.UseVisualStyleBackColor = true;
             this.cmdCharacterEditor.Click += new System.EventHandler(this.cmdCharacterEditor_Click);
+            // 
+            // cmdItemEditor
+            // 
+            this.cmdItemEditor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmdItemEditor.Location = new System.Drawing.Point(338, 110);
+            this.cmdItemEditor.Name = "cmdItemEditor";
+            this.cmdItemEditor.Size = new System.Drawing.Size(140, 23);
+            this.cmdItemEditor.TabIndex = 9;
+            this.cmdItemEditor.Text = "&Item Editor";
+            this.cmdItemEditor.UseVisualStyleBackColor = true;
+            this.cmdItemEditor.Click += new System.EventHandler(this.cmdItemEditor_Click);
             // 
             // UserDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(490, 200);
+            this.Controls.Add(this.cmdItemEditor);
             this.Controls.Add(this.cmdCharacterEditor);
             this.Controls.Add(this.pbScreen);
             this.Controls.Add(this.cmdSave);
@@ -111,5 +124,6 @@
         private Button cmdSave;
         private PictureBox pbScreen;
         private Button cmdCharacterEditor;
+        private Button cmdItemEditor;
     }
 }
