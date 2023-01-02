@@ -55,7 +55,7 @@
             this.pbFF2.BackgroundImage = global::FFPRSaveEditorGUI.Properties.Resources.FF2;
             this.pbFF2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbFF2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbFF2.Cursor = System.Windows.Forms.Cursors.No;
+            this.pbFF2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbFF2.Location = new System.Drawing.Point(232, 12);
             this.pbFF2.Name = "pbFF2";
             this.pbFF2.Size = new System.Drawing.Size(214, 100);
@@ -68,7 +68,7 @@
             this.pbFF3.BackgroundImage = global::FFPRSaveEditorGUI.Properties.Resources.FF3;
             this.pbFF3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbFF3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbFF3.Cursor = System.Windows.Forms.Cursors.No;
+            this.pbFF3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbFF3.Location = new System.Drawing.Point(452, 12);
             this.pbFF3.Name = "pbFF3";
             this.pbFF3.Size = new System.Drawing.Size(214, 100);
@@ -94,7 +94,7 @@
             this.pbFF5.BackgroundImage = global::FFPRSaveEditorGUI.Properties.Resources.FF5;
             this.pbFF5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbFF5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbFF5.Cursor = System.Windows.Forms.Cursors.No;
+            this.pbFF5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbFF5.Location = new System.Drawing.Point(232, 118);
             this.pbFF5.Name = "pbFF5";
             this.pbFF5.Size = new System.Drawing.Size(214, 100);

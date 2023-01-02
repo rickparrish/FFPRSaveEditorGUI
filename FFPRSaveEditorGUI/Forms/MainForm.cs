@@ -11,11 +11,11 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void pbFF2_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show("Sorry, Final Fantasy 2 is not supported yet", "Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            ShowSaveGamesForm("Final Fantasy II PR", typeof(FF2SaveGame));
         }
 
         private void pbFF3_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show("Sorry, Final Fantasy 3 is not supported yet", "Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            ShowSaveGamesForm("Final Fantasy III PR", typeof(FF3SaveGame));
         }
 
         private void pbFF4_DoubleClick(object sender, EventArgs e) {
@@ -23,7 +23,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void pbFF5_DoubleClick(object sender, EventArgs e) {
-            MessageBox.Show("Sorry, Final Fantasy 5 is not supported yet", "Not Supported", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            ShowSaveGamesForm("Final Fantasy V PR", typeof(FF5SaveGame));
         }
 
         private void pbFF6_DoubleClick(object sender, EventArgs e) {
@@ -35,9 +35,11 @@ namespace FFPRSaveEditorGUI.Forms {
             string initialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", ffDirectoryName, "Steam");
 
             // Check how many subdirectories under the initial directory there are -- if just one, use it as the initial directory
-            var subdirectories = Directory.GetDirectories(initialDirectory);
-            if (subdirectories.Length == 1) {
-                initialDirectory = subdirectories[0];
+            if (Directory.Exists(initialDirectory)) {
+                var subdirectories = Directory.GetDirectories(initialDirectory);
+                if (subdirectories.Length == 1) {
+                    initialDirectory = subdirectories[0];
+                }
             }
 
             using (var dialog = new FolderBrowserDialog()) {

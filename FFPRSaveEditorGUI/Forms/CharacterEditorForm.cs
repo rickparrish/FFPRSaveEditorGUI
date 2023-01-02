@@ -40,12 +40,31 @@ namespace FFPRSaveEditorGUI.Forms {
                 columns.Add("Evasion", "addtionalEvasionRate");
                 columns.Add("Magic", "addtionalMagic");
                 columns.Add("Spirit", "addtionalSpirit");
+            } else if (saveType.FullName.Contains("FF2")) {
+                // TODOX Not 100% sure on the stat names, need a look at the stats screen
+                columns.Add("Max MP", "addtionalMaxMp");
+                columns.Add("Strength", "addtionalPower");
+                columns.Add("Agility", "addtionalAgility");
+                columns.Add("Stamina", "addtionalVitality");
+                columns.Add("Intellect", "addtionalIntelligence");
+                columns.Add("Magic", "addtionalMagic");
+                columns.Add("Spirit", "addtionalSpirit");
+            } else if (saveType.FullName.Contains("FF3")) {
+                // TODOX Not 100% sure on the stat names, need a look at the stats screen
+                columns.Add("Strength", "addtionalPower");
+                columns.Add("Agility", "addtionalAgility");
+                columns.Add("Stamina", "addtionalVitality");
+                columns.Add("Intellect", "addtionalIntelligence");
+                columns.Add("Spirit", "addtionalSpirit");
             } else if (saveType.FullName.Contains("FF4")) {
                 columns.Add("Strength", "addtionalPower");
                 columns.Add("Agility", "addtionalAgility");
                 columns.Add("Stamina", "addtionalVitality");
                 columns.Add("Intellect", "addtionalIntelligence");
                 columns.Add("Spirit", "addtionalSpirit");
+            } else if (saveType.FullName.Contains("FF5")) {
+                // TODOX Not 100% sure on the stat names, need a look at the stats screen
+                columns.Add("Max MP", "addtionalMaxMp");
             } else if (saveType.FullName.Contains("FF6")) {
                 columns.Add("Max MP", "addtionalMaxMp");
                 columns.Add("Strength", "addtionalPower");
@@ -53,7 +72,29 @@ namespace FFPRSaveEditorGUI.Forms {
                 columns.Add("Stamina", "addtionalVitality");
                 columns.Add("Magic", "addtionalMagic");
             } else {
-                throw new Exception($"Unexpected saveType '{saveType.FullName}'");
+                columns.Add("MaxMp", "addtionalMaxMp");
+                columns.Add("Power", "addtionalPower");
+                columns.Add("Vitality", "addtionalVitality");
+                columns.Add("Agility", "addtionalAgility");
+                columns.Add("Weight", "addionalWeight");
+                columns.Add("Intelligence", "addtionalIntelligence");
+                columns.Add("Spirit", "addtionalSpirit");
+                columns.Add("Attack", "addtionalAttack");
+                columns.Add("Defense", "addtionalDefense");
+                columns.Add("AbilityDefense", "addtionalAbilityDefense");
+                columns.Add("AbilityEvasionRate", "addtionalAbilityEvasionRate");
+                columns.Add("Magic", "addtionalMagic");
+                columns.Add("Luck", "addtionalLuck");
+                columns.Add("AccuracyRate", "addtionalAccuracyRate");
+                columns.Add("EvasionRate", "addtionalEvasionRate");
+                columns.Add("AbilityDisturbedRate", "addtionalAbilityDisturbedRate");
+                columns.Add("CriticalRate", "addtionalCriticalRate");
+                columns.Add("DamageDirmeter", "addtionalDamageDirmeter");
+                columns.Add("AbilityDefenseRate", "addtionalAbilityDefenseRate");
+                columns.Add("AccuracyCount", "addtionalAccuracyCount");
+                columns.Add("EvasionCount", "addtionalEvasionCount");
+                columns.Add("DefenseCount", "addtionalDefenseCount");
+                columns.Add("MagicDefenseCount", "addtionalMagicDefenseCount");
             }
 
             foreach (DictionaryEntry column in columns) {
@@ -102,35 +143,16 @@ namespace FFPRSaveEditorGUI.Forms {
                     character.parameter.addtionalMaxMp = GetInt(column.Text, character.name, character.parameter.addtionalMaxMp, 0, 9999);
                     character.parameter.currentMP = character.parameter.addtionalMaxMp;
                     break;
-                case "addtionalPower":
-                    character.parameter.addtionalPower = GetInt(column.Text, character.name, character.parameter.addtionalPower, 0, 255);
-                    break;
-                case "addtionalVitality":
-                    character.parameter.addtionalVitality = GetInt(column.Text, character.name, character.parameter.addtionalVitality, 0, 255);
-                    break;
-                case "addtionalAgility":
-                    character.parameter.addtionalAgility = GetInt(column.Text, character.name, character.parameter.addtionalAgility, 0, 255);
-                    break;
-                case "addtionalIntelligence":
-                    character.parameter.addtionalIntelligence = GetInt(column.Text, character.name, character.parameter.addtionalIntelligence, 0, 255);
-                    break;
-                case "addtionalSpirit":
-                    character.parameter.addtionalSpirit = GetInt(column.Text, character.name, character.parameter.addtionalSpirit, 0, 255);
-                    break;
-                case "addtionalMagic":
-                    character.parameter.addtionalMagic = GetInt(column.Text, character.name, character.parameter.addtionalMagic, 0, 255);
-                    break;
-                case "addtionalLuck":
-                    character.parameter.addtionalLuck = GetInt(column.Text, character.name, character.parameter.addtionalLuck, 0, 255);
-                    break;
-                case "addtionalAccuracyRate":
-                    character.parameter.addtionalAccuracyRate = GetInt(column.Text, character.name, character.parameter.addtionalAccuracyRate, 0, 255);
-                    break;
-                case "addtionalEvasionRate":
-                    character.parameter.addtionalEvasionRate = GetInt(column.Text, character.name, character.parameter.addtionalEvasionRate, 0, 255);
-                    break;
                 default:
-                    MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    try {
+                        var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
+                        int oldValue = (int)pi.GetValue(character.parameter);
+
+                        int newValue = GetInt(column.Text, character.name, oldValue, 0, 255);
+                        pi.SetValue(character.parameter, newValue);
+                    } catch (Exception ex) {
+                        MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                     break;
             }
 
@@ -160,44 +182,14 @@ namespace FFPRSaveEditorGUI.Forms {
                         case "currentExp":
                             lvi.SubItems.Add(character.currentExp.ToString("n0"));
                             break;
-                        case "addtionalLevel":
-                            lvi.SubItems.Add(character.parameter.addtionalLevel.ToString("n0"));
-                            break;
-                        case "addtionalMaxHp":
-                            lvi.SubItems.Add(character.parameter.addtionalMaxHp.ToString("n0"));
-                            break;
-                        case "addtionalMaxMp":
-                            lvi.SubItems.Add(character.parameter.addtionalMaxMp.ToString("n0"));
-                            break;
-                        case "addtionalPower":
-                            lvi.SubItems.Add(character.parameter.addtionalPower.ToString("n0"));
-                            break;
-                        case "addtionalVitality":
-                            lvi.SubItems.Add(character.parameter.addtionalVitality.ToString("n0"));
-                            break;
-                        case "addtionalAgility":
-                            lvi.SubItems.Add(character.parameter.addtionalAgility.ToString("n0"));
-                            break;
-                        case "addtionalIntelligence":
-                            lvi.SubItems.Add(character.parameter.addtionalIntelligence.ToString("n0"));
-                            break;
-                        case "addtionalSpirit":
-                            lvi.SubItems.Add(character.parameter.addtionalSpirit.ToString("n0"));
-                            break;
-                        case "addtionalMagic":
-                            lvi.SubItems.Add(character.parameter.addtionalMagic.ToString("n0"));
-                            break;
-                        case "addtionalLuck":
-                            lvi.SubItems.Add(character.parameter.addtionalLuck.ToString("n0"));
-                            break;
-                        case "addtionalAccuracyRate":
-                            lvi.SubItems.Add(character.parameter.addtionalAccuracyRate.ToString("n0"));
-                            break;
-                        case "addtionalEvasionRate":
-                            lvi.SubItems.Add(character.parameter.addtionalEvasionRate.ToString("n0"));
-                            break;
                         default:
-                            throw new Exception($"Unexpected tag in column header: '{column.Tag}'");
+                            try {
+                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
+                                lvi.SubItems.Add(((int)pi.GetValue(character.parameter)).ToString("n0"));
+                            } catch (Exception ex) {
+                                throw new Exception($"Unexpected tag in column header: '{column.Tag}'");
+                            }
+                            break;
                     }
                 }
 
