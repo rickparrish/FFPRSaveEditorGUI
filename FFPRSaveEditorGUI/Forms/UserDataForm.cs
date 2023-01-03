@@ -28,7 +28,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void cmdItemEditor_Click(object sender, EventArgs e) {
-            using (var form = new ItemEditorForm(userData.normalOwnedItemList.target, save.GetType())) {
+            using (var form = new ItemEditorForm(save)) {
                 form.ShowDialog();
             }
         }
