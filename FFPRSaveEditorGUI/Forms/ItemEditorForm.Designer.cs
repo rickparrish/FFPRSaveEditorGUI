@@ -44,7 +44,7 @@
             this.lvItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvItems.Location = new System.Drawing.Point(0, 0);
             this.lvItems.Name = "lvItems";
-            this.lvItems.Size = new System.Drawing.Size(784, 561);
+            this.lvItems.Size = new System.Drawing.Size(984, 561);
             this.lvItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvItems.TabIndex = 4;
             this.lvItems.UseCompatibleStateImageBehavior = false;
@@ -60,12 +60,12 @@
             // chDescription
             // 
             this.chDescription.Text = "Description";
-            this.chDescription.Width = 475;
+            this.chDescription.Width = 625;
             // 
             // chType
             // 
             this.chType.Text = "Type";
-            this.chType.Width = 100;
+            this.chType.Width = 150;
             // 
             // chCount
             // 
@@ -77,7 +77,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.lvItems);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
