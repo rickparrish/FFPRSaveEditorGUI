@@ -6,6 +6,32 @@ namespace FFPRSaveEditorGUI.Forms {
             InitializeComponent();
         }
 
+        private static string GetSaveDirectory(string ffDirectoryName) {
+            // Set the initial directory to the %USERPROFILE%\Documents\My Games\FINAL FANTASY PR\Steam directory
+            string initialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", ffDirectoryName, "Steam");
+
+            // Check how many subdirectories under the initial directory there are -- if just one, use it as the directory
+            if (Directory.Exists(initialDirectory)) {
+                var subdirectories = Directory.GetDirectories(initialDirectory);
+                if (subdirectories.Length == 1) {
+                    return subdirectories[0];
+                }
+            }
+
+            // If we get here, we need to prompt the user to select the right directory
+            using (var dialog = new FolderBrowserDialog()) {
+                dialog.InitialDirectory = initialDirectory;
+                dialog.ShowNewFolderButton = false;
+
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    return dialog.SelectedPath;
+                }
+            }
+
+            // If we get here, the user aborted the dialog
+            return null;
+        }
+
         private void pbFF1_DoubleClick(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy PR", typeof(FF1SaveGame));
         }
@@ -31,25 +57,11 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void ShowSaveGamesForm(string ffDirectoryName, Type saveType) {
-            // Set the initial directory to the %USERPROFILE%\Documents\My Games\FINAL FANTASY PR\Steam directory
-            string initialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", ffDirectoryName, "Steam");
+            string saveDirectory = GetSaveDirectory(ffDirectoryName);
 
-            // Check how many subdirectories under the initial directory there are -- if just one, use it as the initial directory
-            if (Directory.Exists(initialDirectory)) {
-                var subdirectories = Directory.GetDirectories(initialDirectory);
-                if (subdirectories.Length == 1) {
-                    initialDirectory = subdirectories[0];
-                }
-            }
-
-            using (var dialog = new FolderBrowserDialog()) {
-                dialog.InitialDirectory = initialDirectory;
-                dialog.ShowNewFolderButton = false;
-
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    using (var form = new SaveGamesForm(dialog.SelectedPath, saveType)) {
-                        form.ShowDialog();
-                    }
+            if (!string.IsNullOrWhiteSpace(saveDirectory) && Directory.Exists(saveDirectory)) {
+                using (var form = new SaveGamesForm(saveDirectory, saveType)) {
+                    form.ShowDialog();
                 }
             }
         }
