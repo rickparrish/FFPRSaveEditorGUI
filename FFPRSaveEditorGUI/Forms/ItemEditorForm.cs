@@ -30,19 +30,30 @@ namespace FFPRSaveEditorGUI.Forms {
         private void lvItems_MouseDoubleClick(object sender, MouseEventArgs e) {
             if (lvItems.SelectedItems.Count > 0) {
                 var item = (Item)lvItems.SelectedItems[0].Tag;
-                var inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                OwnedItemList_Target inventoryItem = null;
+
+                if (item.isKeyItem) {
+                    inventoryItem = userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                } else {
+                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                }
 
                 int oldCount = inventoryItem == null ? 0 : inventoryItem.count;
                 int newCount = GetInt(item.name, oldCount);
 
                 if (oldCount != newCount) {
                     if (inventoryItem == null) {
-                        inventoryItem = new NormalOwnedItemList_Target() {
+                        inventoryItem = new OwnedItemList_Target() {
                             contentId = item.contentId,
                             count = newCount,
                         };
-                        userData.normalOwnedItemList.target.Add(inventoryItem);
-                        userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                        
+                        if (item.isKeyItem) {
+                            userData.importantOwendItemList.target.Add(inventoryItem);
+                        } else {
+                            userData.normalOwnedItemList.target.Add(inventoryItem);
+                            userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                        }
                     } else {
                         inventoryItem.count = newCount;
                     }
@@ -58,11 +69,16 @@ namespace FFPRSaveEditorGUI.Forms {
             foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
                 var lvi = new ListViewItem();
 
-                var inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                OwnedItemList_Target inventoryItem = null;
+                if (item.isKeyItem) {
+                    inventoryItem = userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                } else {
+                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                }
 
                 lvi.Tag = item;
                 lvi.Text = item.name;
-                lvi.SubItems.Add(item.description);
+                lvi.SubItems.Add((item.isKeyItem ? "(Key Item) " : "") + item.description);
                 lvi.SubItems.Add(item.type);
                 lvi.SubItems.Add(inventoryItem == null ? "0" : inventoryItem.count.ToString());
 
