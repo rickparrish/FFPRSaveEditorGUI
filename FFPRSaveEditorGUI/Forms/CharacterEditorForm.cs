@@ -41,14 +41,13 @@ namespace FFPRSaveEditorGUI.Forms {
                 columns.Add("Magic", "addtionalMagic");
                 columns.Add("Spirit", "addtionalSpirit");
             } else if (saveType.FullName.Contains("FF2")) {
-                // TODOX Not 100% sure on the stat names, need a look at the stats screen
                 columns.Add("Max MP", "addtionalMaxMp");
                 columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Intellect", "addtionalIntelligence");
-                columns.Add("Magic", "addtionalMagic");
                 columns.Add("Spirit", "addtionalSpirit");
+                columns.Add("Intellect", "addtionalIntelligence");
+                columns.Add("Stamina", "addtionalVitality");
+                columns.Add("Agility", "addtionalAgility");
+                columns.Add("Magic", "addtionalMagic");
             } else if (saveType.FullName.Contains("FF3")) {
                 // TODOX Not 100% sure on the stat names, need a look at the stats screen
                 columns.Add("Strength", "addtionalPower");
