@@ -69,7 +69,7 @@ namespace FFPRSaveEditorGUI.Forms {
                     }
 
                     lvi.SubItems.Add(save.timeStamp);
-                    lvi.SubItems.Add($"Time: {Helpers.SecToHMS(save.userData.playTime)}");
+                    lvi.SubItems.Add($"Play Time: {Helpers.SecToHMS(save.userData.playTime)}");
 
                     lvi.ImageIndex = il.Images.Count;
                     il.Images.Add(Image.FromStream(new MemoryStream(Convert.FromBase64String(save.pictureData))));

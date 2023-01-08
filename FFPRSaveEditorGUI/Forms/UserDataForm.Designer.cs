@@ -29,6 +29,10 @@
             this.pbScreen = new System.Windows.Forms.PictureBox();
             this.cmdCharacterEditor = new System.Windows.Forms.Button();
             this.cmdItemEditor = new System.Windows.Forms.Button();
+            this.cmdCancel = new System.Windows.Forms.Button();
+            this.lblPlayTime = new System.Windows.Forms.Label();
+            this.lblTimeStamp = new System.Windows.Forms.Label();
+            this.lblSaveId = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +79,7 @@
             // cmdCharacterEditor
             // 
             this.cmdCharacterEditor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cmdCharacterEditor.Location = new System.Drawing.Point(338, 81);
+            this.cmdCharacterEditor.Location = new System.Drawing.Point(338, 73);
             this.cmdCharacterEditor.Name = "cmdCharacterEditor";
             this.cmdCharacterEditor.Size = new System.Drawing.Size(140, 23);
             this.cmdCharacterEditor.TabIndex = 4;
@@ -86,7 +90,7 @@
             // cmdItemEditor
             // 
             this.cmdItemEditor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cmdItemEditor.Location = new System.Drawing.Point(338, 110);
+            this.cmdItemEditor.Location = new System.Drawing.Point(338, 102);
             this.cmdItemEditor.Name = "cmdItemEditor";
             this.cmdItemEditor.Size = new System.Drawing.Size(140, 23);
             this.cmdItemEditor.TabIndex = 9;
@@ -94,11 +98,62 @@
             this.cmdItemEditor.UseVisualStyleBackColor = true;
             this.cmdItemEditor.Click += new System.EventHandler(this.cmdItemEditor_Click);
             // 
+            // cmdCancel
+            // 
+            this.cmdCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cmdCancel.Location = new System.Drawing.Point(338, 140);
+            this.cmdCancel.Name = "cmdCancel";
+            this.cmdCancel.Size = new System.Drawing.Size(140, 23);
+            this.cmdCancel.TabIndex = 10;
+            this.cmdCancel.Text = "Cancel";
+            this.cmdCancel.UseVisualStyleBackColor = true;
+            // 
+            // lblPlayTime
+            // 
+            this.lblPlayTime.AutoSize = true;
+            this.lblPlayTime.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlayTime.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblPlayTime.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblPlayTime.Location = new System.Drawing.Point(12, 171);
+            this.lblPlayTime.Name = "lblPlayTime";
+            this.lblPlayTime.Size = new System.Drawing.Size(85, 21);
+            this.lblPlayTime.TabIndex = 12;
+            this.lblPlayTime.Text = "Play Time";
+            // 
+            // lblTimeStamp
+            // 
+            this.lblTimeStamp.AutoSize = true;
+            this.lblTimeStamp.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeStamp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblTimeStamp.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTimeStamp.Location = new System.Drawing.Point(12, 150);
+            this.lblTimeStamp.Name = "lblTimeStamp";
+            this.lblTimeStamp.Size = new System.Drawing.Size(101, 21);
+            this.lblTimeStamp.TabIndex = 14;
+            this.lblTimeStamp.Text = "Time Stamp";
+            // 
+            // lblSaveId
+            // 
+            this.lblSaveId.AutoSize = true;
+            this.lblSaveId.BackColor = System.Drawing.Color.Transparent;
+            this.lblSaveId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblSaveId.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSaveId.Location = new System.Drawing.Point(12, 129);
+            this.lblSaveId.Name = "lblSaveId";
+            this.lblSaveId.Size = new System.Drawing.Size(67, 21);
+            this.lblSaveId.TabIndex = 16;
+            this.lblSaveId.Text = "Save ID";
+            // 
             // UserDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(490, 200);
+            this.Controls.Add(this.lblSaveId);
+            this.Controls.Add(this.lblTimeStamp);
+            this.Controls.Add(this.lblPlayTime);
+            this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdItemEditor);
             this.Controls.Add(this.cmdCharacterEditor);
             this.Controls.Add(this.pbScreen);
@@ -111,6 +166,7 @@
             this.Name = "UserDataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "UserDataForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserDataForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -125,5 +181,9 @@
         private PictureBox pbScreen;
         private Button cmdCharacterEditor;
         private Button cmdItemEditor;
+        private Button cmdCancel;
+        private Label lblPlayTime;
+        private Label lblTimeStamp;
+        private Label lblSaveId;
     }
 }
