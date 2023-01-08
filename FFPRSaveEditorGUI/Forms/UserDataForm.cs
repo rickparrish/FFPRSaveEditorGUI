@@ -43,7 +43,7 @@ namespace FFPRSaveEditorGUI.Forms {
             if (save.id == 21) {
                 lblSaveId.Text = "Autosave";
             } else if (save.id == 22) {
-                lblSaveId.Text = "File 00 (Quick Save)"; // TODOX "File 00" is a hack to put it second in the list
+                lblSaveId.Text = "File 00 (Quick Save)";
             } else {
                 lblSaveId.Text = $"File {save.id:D2}";
             }

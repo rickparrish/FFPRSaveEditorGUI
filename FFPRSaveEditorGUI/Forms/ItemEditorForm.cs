@@ -1,8 +1,4 @@
-﻿// TODOX List:
-// - Add a panel at the bottom that allows adding a new item
-//   - Dropdownlist to show items user doesn't have yet
-
-using FFPRSaveEditor.Common.Models;
+﻿using FFPRSaveEditor.Common.Models;
 using System.Data;
 
 namespace FFPRSaveEditorGUI.Forms {
