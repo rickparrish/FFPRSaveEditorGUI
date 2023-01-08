@@ -33,7 +33,7 @@
             // cmdLoadAll
             // 
             this.cmdLoadAll.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdLoadAll.Location = new System.Drawing.Point(0, 188);
+            this.cmdLoadAll.Location = new System.Drawing.Point(0, 313);
             this.cmdLoadAll.Name = "cmdLoadAll";
             this.cmdLoadAll.Size = new System.Drawing.Size(534, 23);
             this.cmdLoadAll.TabIndex = 1;
@@ -55,7 +55,7 @@
             this.lvSaveGames.Location = new System.Drawing.Point(0, 0);
             this.lvSaveGames.MultiSelect = false;
             this.lvSaveGames.Name = "lvSaveGames";
-            this.lvSaveGames.Size = new System.Drawing.Size(534, 188);
+            this.lvSaveGames.Size = new System.Drawing.Size(534, 313);
             this.lvSaveGames.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvSaveGames.TabIndex = 2;
             this.lvSaveGames.UseCompatibleStateImageBehavior = false;
@@ -66,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 211);
+            this.ClientSize = new System.Drawing.Size(534, 336);
             this.Controls.Add(this.lvSaveGames);
             this.Controls.Add(this.cmdLoadAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

@@ -17,29 +17,37 @@ namespace FFPRSaveEditorGUI.Forms {
             this.directoryName = directoryName;
             this.saveType = saveType;
 
-            // Only load the autosave by default
-            LoadSaveGames("7nCxyzTwG31W3Zlg70mo751W8ETH1n+Km0dWOzRU84Y=");
+            // Only load the autosave and quicksave by default
+            LoadSaveGames(false);
         }
 
         private void cmdLoadAll_Click(object sender, EventArgs e) {
             // Reload list to show all save games
             cmdLoadAll.Visible = false;
             lvSaveGames.Items.Clear();
-            LoadSaveGames("*.");
+            LoadSaveGames(true);
 
-            // Increase height and re-center vertically (175 is half the difference between old 250 height and new 600 height)
-            this.Size = new Size(this.Size.Width, 600);
-            this.Top = Math.Max(0, this.Top - 175);
+            // Increase height and re-center vertically
+            var oldSize = new Size(this.Size.Width, this.Size.Height);
+            this.Size = new Size(1000, 625);
+            this.Left = Math.Max(0, this.Left - ((this.Size.Width - oldSize.Width) / 2));
+            this.Top = Math.Max(0, this.Top - ((this.Size.Height - oldSize.Height) / 2));
         }
 
-        private void LoadSaveGames(string searchPattern) {
-            string[] filenames = Directory.GetFiles(directoryName, searchPattern, SearchOption.TopDirectoryOnly);
+        private void LoadSaveGames(bool loadAll) {
+            string[] filenames = Directory.GetFiles(directoryName, "*.", SearchOption.TopDirectoryOnly);
 
             ImageList il = new ImageList();
             il.ImageSize = new Size(256, 144);
             lvSaveGames.LargeImageList = il;
 
             foreach (var filename in filenames) {
+                // Skip this file if we only want to show the autosave and quicksave
+                bool shouldLoad = loadAll || filename.EndsWith("7nCxyzTwG31W3Zlg70mo751W8ETH1n+Km0dWOzRU84Y=") || filename.EndsWith("Rl18osV3e9kPX9SMWQj8mqShFpTUmu1lf6Mb=FVVfqk=");
+                if (!shouldLoad) {
+                    continue;
+                }
+
                 // Load save file and decrypt
                 string encryptedData = File.ReadAllText(filename);
                 string jsonData = SaveGame.Decrypt(encryptedData);
