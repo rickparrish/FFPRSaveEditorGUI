@@ -125,7 +125,7 @@ namespace FFPRSaveEditorGUI.Forms {
                     character.name = Helpers.GetString($"Enter a new {column.Text} for {character.name}", column.Text, character.name);
                     break;
                 case "currentExp":
-                    character.currentExp = GetInt(column.Text, character.name, character.currentExp);
+                    character.currentExp = GetInt(column.Text, character.name, character.currentExp, 0, 9999999);
                     break;
                 case "addtionalLevel":
                     MessageBox.Show("Level is read-only and can be adjusted by changing the Experience instead", "Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -135,7 +135,7 @@ namespace FFPRSaveEditorGUI.Forms {
                     character.parameter.currentHP = character.parameter.addtionalMaxHp;
                     break;
                 case "addtionalMaxMp":
-                    character.parameter.addtionalMaxMp = GetInt(column.Text, character.name, character.parameter.addtionalMaxMp, 0, 9999);
+                    character.parameter.addtionalMaxMp = GetInt(column.Text, character.name, character.parameter.addtionalMaxMp, 0, 999);
                     character.parameter.currentMP = character.parameter.addtionalMaxMp;
                     break;
                 default:
