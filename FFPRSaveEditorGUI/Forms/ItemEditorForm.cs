@@ -3,6 +3,7 @@ using System.Data;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class ItemEditorForm : Form {
+        private ListViewColumnSorter columnSorter;
         private BaseSaveGame save;
         private UserData userData;
 
@@ -13,14 +14,42 @@ namespace FFPRSaveEditorGUI.Forms {
         public ItemEditorForm(BaseSaveGame save) {
             InitializeComponent();
 
+            // Create an instance of a ListView column sorter and assign it
+            // to the ListView control.
+            columnSorter = new ListViewColumnSorter();
+            this.lvItems.ListViewItemSorter = columnSorter;
+
             this.save = save;
             this.userData = ((dynamic)save).userData;
 
             UpdateDisplay();
+
+            columnSorter.Order = SortOrder.Ascending;
+            columnSorter.SortColumn = 0;
+            this.lvItems.Sort();
         }
 
         private int GetInt(string name, int value) {
             return Helpers.GetInt($"Enter the number of {name} you want", name, value, 1, 99);
+        }
+
+        private void lvItems_ColumnClick(object sender, ColumnClickEventArgs e) {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == columnSorter.SortColumn) {
+                // Reverse the current sort direction for this column.
+                if (columnSorter.Order == SortOrder.Ascending) {
+                    columnSorter.Order = SortOrder.Descending;
+                } else {
+                    columnSorter.Order = SortOrder.Ascending;
+                }
+            } else {
+                // Set the column number that is to be sorted; default to ascending.
+                columnSorter.SortColumn = e.Column;
+                columnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvItems.Sort();
         }
 
         private void lvItems_MouseDoubleClick(object sender, MouseEventArgs e) {
@@ -104,7 +133,7 @@ namespace FFPRSaveEditorGUI.Forms {
                 lvi.Text = item.name;
                 lvi.SubItems.Add((item.isKeyItem ? "(Key Item) " : "") + item.description);
                 lvi.SubItems.Add(item.type);
-                lvi.SubItems.Add(inventoryItem == null ? "0" : inventoryItem.count.ToString());
+                lvi.SubItems.Add(inventoryItem == null ? "00" : inventoryItem.count.ToString("d2"));
 
                 lvItems.Items.Add(lvi);
             }

@@ -45,7 +45,6 @@
             this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvItems.FullRowSelect = true;
             this.lvItems.GridLines = true;
-            this.lvItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvItems.Location = new System.Drawing.Point(0, 24);
             this.lvItems.Name = "lvItems";
             this.lvItems.Size = new System.Drawing.Size(984, 537);
@@ -53,6 +52,7 @@
             this.lvItems.TabIndex = 4;
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.View = System.Windows.Forms.View.Details;
+            this.lvItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvItems_ColumnClick);
             this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvItems_MouseDoubleClick);
             // 
             // chName
