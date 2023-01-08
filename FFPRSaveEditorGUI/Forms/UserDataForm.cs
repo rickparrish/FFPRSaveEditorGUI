@@ -63,7 +63,27 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void UserDataForm_FormClosing(object sender, FormClosingEventArgs e) {
-            e.Cancel = MessageBox.Show("Are you sure you want to close without saving your changes?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes;
+            // Don't prompt if they clicked Save
+            if (this.DialogResult == DialogResult.OK) {
+                return;
+            }
+
+            var result = MessageBox.Show("Would you like to save your changes?", "Save Changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            switch (result) {
+                case DialogResult.Yes:
+                    this.DialogResult = DialogResult.OK;
+                    break;
+
+                case DialogResult.No:
+                    this.DialogResult = DialogResult.Cancel;
+                    break;
+
+                case DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
+
+            }
         }
     }
 }
