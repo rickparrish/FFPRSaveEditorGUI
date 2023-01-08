@@ -57,4 +57,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="rtbAbout.Text" xml:space="preserve">
+    <value>Final Fantasy Pixel Remaster Save Editor is a free (and open source) save editor that allows you to edit your FF PR saves.
+GitHub Repo: https://github.com/rickparrish/FFPRSaveEditorGUI
+
+Another open source library by Anub1sR0cks is used to read and write the encrypted save game files.
+GitHub Repo: https://github.com/Anub1sR0cks/FFPRSaveEditor</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 using FFPRSaveEditor.Common.Models;
+using System.Diagnostics;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class MainForm : Form {
@@ -32,28 +33,32 @@ namespace FFPRSaveEditorGUI.Forms {
             return null;
         }
 
-        private void pbFF1_DoubleClick(object sender, EventArgs e) {
+        private void pbFF1_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy PR", typeof(FF1SaveGame));
         }
 
-        private void pbFF2_DoubleClick(object sender, EventArgs e) {
+        private void pbFF2_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy II PR", typeof(FF2SaveGame));
         }
 
-        private void pbFF3_DoubleClick(object sender, EventArgs e) {
+        private void pbFF3_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy III PR", typeof(FF3SaveGame));
         }
 
-        private void pbFF4_DoubleClick(object sender, EventArgs e) {
+        private void pbFF4_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy IV PR", typeof(FF4SaveGame));
         }
 
-        private void pbFF5_DoubleClick(object sender, EventArgs e) {
+        private void pbFF5_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy V PR", typeof(FF5SaveGame));
         }
 
-        private void pbFF6_DoubleClick(object sender, EventArgs e) {
+        private void pbFF6_Click(object sender, EventArgs e) {
             ShowSaveGamesForm("Final Fantasy VI PR", typeof(FF6SaveGame));
+        }
+
+        private void rtbAbout_LinkClicked(object sender, LinkClickedEventArgs e) {
+            Process.Start(new ProcessStartInfo(e.LinkText) { UseShellExecute = true });
         }
 
         private void ShowSaveGamesForm(string ffDirectoryName, Type saveType) {
