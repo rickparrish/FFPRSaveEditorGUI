@@ -158,6 +158,48 @@ namespace FFPRSaveEditorGUI.Forms {
             UpdateDisplay();
         }
 
+        private void mnuMaxAllCharacters_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Are you sure you want to max these attributes for all characters?", "Confirm Max All", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+            
+            foreach (ListViewItem lvi in lvCharacters.Items) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                foreach (ColumnHeader column in lvCharacters.Columns) {
+                    switch (column.Tag) {
+                        case "name":
+                            // Do not modify
+                            break;
+                        case "currentExp":
+                            character.currentExp = 9999999;
+                            break;
+                        case "addtionalLevel":
+                            // Do not modify
+                            break;
+                        case "addtionalMaxHp":
+                            character.parameter.addtionalMaxHp = 9999;
+                            character.parameter.currentHP = character.parameter.addtionalMaxHp;
+                            break;
+                        case "addtionalMaxMp":
+                            character.parameter.addtionalMaxMp = 999;
+                            character.parameter.currentMP = character.parameter.addtionalMaxMp;
+                            break;
+                        default:
+                            try {
+                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
+                                pi.SetValue(character.parameter, 255);
+                            } catch (Exception ex) {
+                                MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            UpdateDisplay();
+        }
+
         private void UpdateDisplay() {
             lvCharacters.Items.Clear();
 

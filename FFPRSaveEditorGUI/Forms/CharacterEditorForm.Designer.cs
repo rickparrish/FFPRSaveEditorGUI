@@ -28,6 +28,10 @@
             this.chLevel = new System.Windows.Forms.ColumnHeader();
             this.chExperience = new System.Windows.Forms.ColumnHeader();
             this.chMaxHP = new System.Windows.Forms.ColumnHeader();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.charactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMaxAllCharacters = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvCharacters
@@ -42,9 +46,9 @@
             this.lvCharacters.FullRowSelect = true;
             this.lvCharacters.GridLines = true;
             this.lvCharacters.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvCharacters.Location = new System.Drawing.Point(0, 0);
+            this.lvCharacters.Location = new System.Drawing.Point(0, 24);
             this.lvCharacters.Name = "lvCharacters";
-            this.lvCharacters.Size = new System.Drawing.Size(359, 361);
+            this.lvCharacters.Size = new System.Drawing.Size(359, 337);
             this.lvCharacters.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvCharacters.TabIndex = 0;
             this.lvCharacters.UseCompatibleStateImageBehavior = false;
@@ -75,19 +79,49 @@
             this.chMaxHP.Text = "Max HP";
             this.chMaxHP.Width = 75;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.charactersToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(359, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // charactersToolStripMenuItem
+            // 
+            this.charactersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuMaxAllCharacters});
+            this.charactersToolStripMenuItem.Name = "charactersToolStripMenuItem";
+            this.charactersToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.charactersToolStripMenuItem.Text = "&Characters";
+            // 
+            // mnuMaxAllCharacters
+            // 
+            this.mnuMaxAllCharacters.Name = "mnuMaxAllCharacters";
+            this.mnuMaxAllCharacters.Size = new System.Drawing.Size(180, 22);
+            this.mnuMaxAllCharacters.Text = "&Max All Characters";
+            this.mnuMaxAllCharacters.Click += new System.EventHandler(this.mnuMaxAllCharacters_Click);
+            // 
             // CharacterEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(359, 361);
             this.Controls.Add(this.lvCharacters);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CharacterEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Character Editor";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -98,5 +132,8 @@
         private ColumnHeader chExperience;
         private ColumnHeader chMaxHP;
         private ColumnHeader chLevel;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem charactersToolStripMenuItem;
+        private ToolStripMenuItem mnuMaxAllCharacters;
     }
 }
