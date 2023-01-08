@@ -63,6 +63,34 @@ namespace FFPRSaveEditorGUI.Forms {
             }
         }
 
+        private void mnuAdd99OfEachItem_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Are you sure you want to give yourself 99 of each item?", "Confirm Add 99", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
+                var lvi = new ListViewItem();
+
+                OwnedItemList_Target inventoryItem = null;
+                if (!item.isKeyItem) {
+                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+
+                    if (inventoryItem == null) {
+                        inventoryItem = new OwnedItemList_Target() {
+                            contentId = item.contentId,
+                            count = 99,
+                        };
+                        userData.normalOwnedItemList.target.Add(inventoryItem);
+                        userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                    } else {
+                        inventoryItem.count = 99;
+                    }
+                }
+            }
+
+            UpdateDisplay();
+        }
+
         private void UpdateDisplay() {
             lvItems.Items.Clear();
 
