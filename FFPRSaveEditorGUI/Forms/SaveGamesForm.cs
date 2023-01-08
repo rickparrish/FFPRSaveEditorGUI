@@ -79,7 +79,7 @@ namespace FFPRSaveEditorGUI.Forms {
             }
         }
 
-        private void lvSaveGames_DoubleClick(object sender, EventArgs e) {
+        private void lvSaveGames_Click(object sender, EventArgs e) {
             var lv = (sender as ListView);
             if (lv.SelectedItems.Count > 0) {
                 string filename = lv.SelectedItems[0].Tag.ToString();

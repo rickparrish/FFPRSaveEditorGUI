@@ -60,7 +60,7 @@
             this.lvSaveGames.TabIndex = 2;
             this.lvSaveGames.UseCompatibleStateImageBehavior = false;
             this.lvSaveGames.View = System.Windows.Forms.View.Tile;
-            this.lvSaveGames.DoubleClick += new System.EventHandler(this.lvSaveGames_DoubleClick);
+            this.lvSaveGames.Click += new System.EventHandler(this.lvSaveGames_Click);
             // 
             // SaveGamesForm
             // 
