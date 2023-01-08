@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.charactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMaxAllCharacters = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMaxSelectedCharacters = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +93,8 @@
             // charactersToolStripMenuItem
             // 
             this.charactersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMaxAllCharacters});
+            this.mnuMaxAllCharacters,
+            this.mnuMaxSelectedCharacters});
             this.charactersToolStripMenuItem.Name = "charactersToolStripMenuItem";
             this.charactersToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.charactersToolStripMenuItem.Text = "&Characters";
@@ -100,9 +102,16 @@
             // mnuMaxAllCharacters
             // 
             this.mnuMaxAllCharacters.Name = "mnuMaxAllCharacters";
-            this.mnuMaxAllCharacters.Size = new System.Drawing.Size(180, 22);
-            this.mnuMaxAllCharacters.Text = "&Max All Characters";
+            this.mnuMaxAllCharacters.Size = new System.Drawing.Size(203, 22);
+            this.mnuMaxAllCharacters.Text = "Max &All Characters";
             this.mnuMaxAllCharacters.Click += new System.EventHandler(this.mnuMaxAllCharacters_Click);
+            // 
+            // mnuMaxSelectedCharacters
+            // 
+            this.mnuMaxSelectedCharacters.Name = "mnuMaxSelectedCharacters";
+            this.mnuMaxSelectedCharacters.Size = new System.Drawing.Size(203, 22);
+            this.mnuMaxSelectedCharacters.Text = "Max &Selected Characters";
+            this.mnuMaxSelectedCharacters.Click += new System.EventHandler(this.mnuMaxSelectedCharacters_Click);
             // 
             // CharacterEditorForm
             // 
@@ -135,5 +144,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem charactersToolStripMenuItem;
         private ToolStripMenuItem mnuMaxAllCharacters;
+        private ToolStripMenuItem mnuMaxSelectedCharacters;
     }
 }

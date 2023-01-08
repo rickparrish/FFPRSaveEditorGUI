@@ -1,9 +1,5 @@
 ﻿// In FF1 parameter.currentMpCountList and addtionalMaxMpCountList has an array for the MP available at each level
 
-// TODOX List:
-// - Add a button to max the stats for the selected character
-// - Add a button to max the stats for all characters
-
 using FFPRSaveEditor.Common.Models;
 using System.Collections;
 using System.Collections.Specialized;
@@ -158,6 +154,38 @@ namespace FFPRSaveEditorGUI.Forms {
             UpdateDisplay();
         }
 
+        private void MaxCharacter(OwnedCharacterList_Target character) {
+            foreach (ColumnHeader column in lvCharacters.Columns) {
+                switch (column.Tag) {
+                    case "name":
+                        // Do not modify
+                        break;
+                    case "currentExp":
+                        character.currentExp = 9999999;
+                        break;
+                    case "addtionalLevel":
+                        // Do not modify
+                        break;
+                    case "addtionalMaxHp":
+                        character.parameter.addtionalMaxHp = 9999;
+                        character.parameter.currentHP = character.parameter.addtionalMaxHp;
+                        break;
+                    case "addtionalMaxMp":
+                        character.parameter.addtionalMaxMp = 999;
+                        character.parameter.currentMP = character.parameter.addtionalMaxMp;
+                        break;
+                    default:
+                        try {
+                            var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
+                            pi.SetValue(character.parameter, 255);
+                        } catch (Exception ex) {
+                            MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        break;
+                }
+            }
+        }
+
         private void mnuMaxAllCharacters_Click(object sender, EventArgs e) {
             if (MessageBox.Show("Are you sure you want to max these attributes for all characters?", "Confirm Max All", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
@@ -166,35 +194,25 @@ namespace FFPRSaveEditorGUI.Forms {
             foreach (ListViewItem lvi in lvCharacters.Items) {
                 var character = (OwnedCharacterList_Target)lvi.Tag;
 
-                foreach (ColumnHeader column in lvCharacters.Columns) {
-                    switch (column.Tag) {
-                        case "name":
-                            // Do not modify
-                            break;
-                        case "currentExp":
-                            character.currentExp = 9999999;
-                            break;
-                        case "addtionalLevel":
-                            // Do not modify
-                            break;
-                        case "addtionalMaxHp":
-                            character.parameter.addtionalMaxHp = 9999;
-                            character.parameter.currentHP = character.parameter.addtionalMaxHp;
-                            break;
-                        case "addtionalMaxMp":
-                            character.parameter.addtionalMaxMp = 999;
-                            character.parameter.currentMP = character.parameter.addtionalMaxMp;
-                            break;
-                        default:
-                            try {
-                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
-                                pi.SetValue(character.parameter, 255);
-                            } catch (Exception ex) {
-                                MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            }
-                            break;
-                    }
-                }
+                MaxCharacter(character);
+            }
+
+            UpdateDisplay();
+        }
+
+        private void mnuMaxSelectedCharacters_Click(object sender, EventArgs e) {
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max these attributes for the selected characters?", "Confirm Max All", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                MaxCharacter(character);
             }
 
             UpdateDisplay();
