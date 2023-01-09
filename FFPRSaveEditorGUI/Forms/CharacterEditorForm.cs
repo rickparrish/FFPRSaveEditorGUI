@@ -8,6 +8,7 @@ using System.Data;
 namespace FFPRSaveEditorGUI.Forms {
     public partial class CharacterEditorForm : Form {
         private List<OwnedCharacterList_Target> characters;
+        private Type saveType;
 
         public CharacterEditorForm() {
             InitializeComponent();
@@ -17,13 +18,16 @@ namespace FFPRSaveEditorGUI.Forms {
             InitializeComponent();
 
             this.characters = characters;
+            this.saveType = saveType;
 
-            AddColumns(saveType);
+            mnuFF2.Visible = saveType.FullName.Contains("FF2");
+
+            AddColumns();
 
             UpdateDisplay();
         }
 
-        private void AddColumns(Type saveType) {
+        private void AddColumns() {
             var columns = new OrderedDictionary();
 
             if (saveType.FullName.Contains("FF1")) {
@@ -154,65 +158,117 @@ namespace FFPRSaveEditorGUI.Forms {
             UpdateDisplay();
         }
 
-        private void MaxCharacter(OwnedCharacterList_Target character) {
-            foreach (ColumnHeader column in lvCharacters.Columns) {
-                switch (column.Tag) {
-                    case "name":
-                        // Do not modify
-                        break;
-                    case "currentExp":
-                        character.currentExp = 9999999;
-                        break;
-                    case "addtionalLevel":
-                        // Do not modify
-                        break;
-                    case "addtionalMaxHp":
-                        character.parameter.addtionalMaxHp = 9999;
-                        character.parameter.currentHP = character.parameter.addtionalMaxHp;
-                        break;
-                    case "addtionalMaxMp":
-                        character.parameter.addtionalMaxMp = 999;
-                        character.parameter.currentMP = character.parameter.addtionalMaxMp;
-                        break;
-                    default:
-                        try {
-                            var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
-                            pi.SetValue(character.parameter, 255);
-                        } catch (Exception ex) {
-                            MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        }
-                        break;
-                }
-            }
-        }
-
-        private void mnuMaxAllCharacters_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("Are you sure you want to max these attributes for all characters?", "Confirm Max All", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+        private void mnuFF2MaxMagic_Click(object sender, EventArgs e) {
+            if (!saveType.FullName.Contains("FF2")) {
                 return;
             }
-            
-            foreach (ListViewItem lvi in lvCharacters.Items) {
-                var character = (OwnedCharacterList_Target)lvi.Tag;
 
-                MaxCharacter(character);
-            }
-
-            UpdateDisplay();
-        }
-
-        private void mnuMaxSelectedCharacters_Click(object sender, EventArgs e) {
             if (lvCharacters.SelectedItems.Count == 0) {
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to max these attributes for the selected characters?", "Confirm Max All", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+            if (MessageBox.Show("Are you sure you want to max magic levels for the selected characters?", "Confirm Max Magic", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
             }
 
             foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
                 var character = (OwnedCharacterList_Target)lvi.Tag;
 
-                MaxCharacter(character);
+                // Max magic levels for equipped spells
+                for (int i = 0; i < character.abilityDictionary.values.First().target.Count; i++) {
+                    var abilityDict = character.abilityDictionary.values.First().target[i];
+
+                    // Ensure this is a magical ability (5 is level 1 fire, 644 is level 16 ultima)
+                    if ((abilityDict.abilityId >= 5) && (abilityDict.abilityId <= 644)) {
+                        var abilityList = character.abilityList.target.Single(x => x.abilityId == abilityDict.abilityId);
+
+                        // Will result in 0 for level 16, so we only adjust > 0 values
+                        var level = (abilityDict.abilityId - 4) % 16;
+                        if (level > 0) {
+                            // Calculate how many levels this spell needs to raise, then raise it
+                            int offset = 16 - level;
+
+                            abilityDict.abilityId += offset;
+                            abilityDict.contentId += offset;
+                            abilityDict.skillLevel = 860;
+
+                            abilityList.abilityId += offset;
+                            abilityList.contentId += offset;
+                            abilityList.skillLevel = 860;
+                        }
+                    }
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuFF2MaxWeapons_Click(object sender, EventArgs e) {
+            if (!saveType.FullName.Contains("FF2")) {
+                return;
+            }
+
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max weapon levels for the selected characters?", "Confirm Max Weapons", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                // Max weapon levels
+                for (int i = 0; i < character.skillLevelTargets.values.Count; i++) {
+                    character.skillLevelTargets.values[i] = 860;
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuMaxCharacters_Click(object sender, EventArgs e) {
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max these attributes for the selected characters?", "Confirm Max Characters", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                foreach (ColumnHeader column in lvCharacters.Columns) {
+                    switch (column.Tag) {
+                        case "name":
+                            // Do not modify
+                            break;
+                        case "currentExp":
+                            character.currentExp = 9999999;
+                            break;
+                        case "addtionalLevel":
+                            // Do not modify
+                            break;
+                        case "addtionalMaxHp":
+                            character.parameter.addtionalMaxHp = 9999;
+                            character.parameter.currentHP = character.parameter.addtionalMaxHp;
+                            break;
+                        case "addtionalMaxMp":
+                            character.parameter.addtionalMaxMp = 999;
+                            character.parameter.currentMP = character.parameter.addtionalMaxMp;
+                            break;
+                        default:
+                            try {
+                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
+                                pi.SetValue(character.parameter, 255);
+                            } catch (Exception ex) {
+                                MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            break;
+                    }
+                }
             }
 
             UpdateDisplay();

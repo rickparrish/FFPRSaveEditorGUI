@@ -30,8 +30,11 @@
             this.chMaxHP = new System.Windows.Forms.ColumnHeader();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.charactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMaxAllCharacters = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMaxSelectedCharacters = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMaxCharacters = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFF2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFF2MaxWeapons = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFF2MaxMagic = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,25 +96,48 @@
             // charactersToolStripMenuItem
             // 
             this.charactersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMaxAllCharacters,
-            this.mnuMaxSelectedCharacters});
+            this.mnuMaxCharacters,
+            this.toolStripMenuItem1,
+            this.mnuFF2});
             this.charactersToolStripMenuItem.Name = "charactersToolStripMenuItem";
-            this.charactersToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.charactersToolStripMenuItem.Text = "&Characters";
+            this.charactersToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.charactersToolStripMenuItem.Text = "&Quick Options";
             // 
-            // mnuMaxAllCharacters
+            // mnuMaxCharacters
             // 
-            this.mnuMaxAllCharacters.Name = "mnuMaxAllCharacters";
-            this.mnuMaxAllCharacters.Size = new System.Drawing.Size(203, 22);
-            this.mnuMaxAllCharacters.Text = "Max &All Characters";
-            this.mnuMaxAllCharacters.Click += new System.EventHandler(this.mnuMaxAllCharacters_Click);
+            this.mnuMaxCharacters.Name = "mnuMaxCharacters";
+            this.mnuMaxCharacters.Size = new System.Drawing.Size(203, 22);
+            this.mnuMaxCharacters.Text = "&Max Selected Characters";
+            this.mnuMaxCharacters.Click += new System.EventHandler(this.mnuMaxCharacters_Click);
             // 
-            // mnuMaxSelectedCharacters
+            // mnuFF2
             // 
-            this.mnuMaxSelectedCharacters.Name = "mnuMaxSelectedCharacters";
-            this.mnuMaxSelectedCharacters.Size = new System.Drawing.Size(203, 22);
-            this.mnuMaxSelectedCharacters.Text = "Max &Selected Characters";
-            this.mnuMaxSelectedCharacters.Click += new System.EventHandler(this.mnuMaxSelectedCharacters_Click);
+            this.mnuFF2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFF2MaxWeapons,
+            this.mnuFF2MaxMagic});
+            this.mnuFF2.Name = "mnuFF2";
+            this.mnuFF2.Size = new System.Drawing.Size(203, 22);
+            this.mnuFF2.Text = "FF&2";
+            this.mnuFF2.Visible = false;
+            // 
+            // mnuFF2MaxWeapons
+            // 
+            this.mnuFF2MaxWeapons.Name = "mnuFF2MaxWeapons";
+            this.mnuFF2MaxWeapons.Size = new System.Drawing.Size(280, 22);
+            this.mnuFF2MaxWeapons.Text = "Max Selected Character &Weapon Levels";
+            this.mnuFF2MaxWeapons.Click += new System.EventHandler(this.mnuFF2MaxWeapons_Click);
+            // 
+            // mnuFF2MaxMagic
+            // 
+            this.mnuFF2MaxMagic.Name = "mnuFF2MaxMagic";
+            this.mnuFF2MaxMagic.Size = new System.Drawing.Size(280, 22);
+            this.mnuFF2MaxMagic.Text = "Max Selected Character &Magic Levels";
+            this.mnuFF2MaxMagic.Click += new System.EventHandler(this.mnuFF2MaxMagic_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(200, 6);
             // 
             // CharacterEditorForm
             // 
@@ -143,7 +169,10 @@
         private ColumnHeader chLevel;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem charactersToolStripMenuItem;
-        private ToolStripMenuItem mnuMaxAllCharacters;
-        private ToolStripMenuItem mnuMaxSelectedCharacters;
+        private ToolStripMenuItem mnuMaxCharacters;
+        private ToolStripMenuItem mnuFF2;
+        private ToolStripMenuItem mnuFF2MaxWeapons;
+        private ToolStripMenuItem mnuFF2MaxMagic;
+        private ToolStripSeparator toolStripMenuItem1;
     }
 }
