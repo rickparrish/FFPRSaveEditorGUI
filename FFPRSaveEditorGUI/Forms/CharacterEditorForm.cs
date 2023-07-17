@@ -49,7 +49,6 @@ namespace FFPRSaveEditorGUI.Forms {
                 columns.Add("Agility", "addtionalAgility");
                 columns.Add("Magic", "addtionalMagic");
             } else if (saveType.FullName.Contains("FF3")) {
-                // TODOX Not 100% sure on the stat names, need a look at the stats screen
                 columns.Add("Strength", "addtionalPower");
                 columns.Add("Agility", "addtionalAgility");
                 columns.Add("Stamina", "addtionalVitality");
