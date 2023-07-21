@@ -29,7 +29,7 @@ namespace FFPRSaveEditorGUI.Forms {
 
             // Increase height and re-center vertically
             var oldSize = new Size(this.Size.Width, this.Size.Height);
-            this.Size = new Size(1000, 625);
+            this.Size = new Size(1024, 625);
             this.Left = Math.Max(0, this.Left - ((this.Size.Width - oldSize.Width) / 2));
             this.Top = Math.Max(0, this.Top - ((this.Size.Height - oldSize.Height) / 2));
         }
