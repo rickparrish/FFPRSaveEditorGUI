@@ -21,6 +21,7 @@ namespace FFPRSaveEditorGUI.Forms {
             this.saveType = saveType;
 
             mnuFF2.Visible = saveType.FullName.Contains("FF2");
+            mnuFF3.Visible = saveType.FullName.Contains("FF3");
 
             AddColumns();
 
@@ -61,8 +62,11 @@ namespace FFPRSaveEditorGUI.Forms {
                 columns.Add("Intellect", "addtionalIntelligence");
                 columns.Add("Spirit", "addtionalSpirit");
             } else if (saveType.FullName.Contains("FF5")) {
-                // TODOX Not 100% sure on the stat names, need a look at the stats screen
                 columns.Add("Max MP", "addtionalMaxMp");
+                columns.Add("Strength", "addtionalPower");
+                columns.Add("Agility", "addtionalAgility");
+                columns.Add("Stamina", "addtionalVitality");
+                columns.Add("Magic", "addtionalMagic");
             } else if (saveType.FullName.Contains("FF6")) {
                 columns.Add("Max MP", "addtionalMaxMp");
                 columns.Add("Strength", "addtionalPower");
@@ -221,6 +225,31 @@ namespace FFPRSaveEditorGUI.Forms {
                 // Max weapon levels
                 for (int i = 0; i < character.skillLevelTargets.values.Count; i++) {
                     character.skillLevelTargets.values[i] = 860;
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuFF3MaxJobs_Click(object sender, EventArgs e) {
+            if (!saveType.FullName.Contains("FF3")) {
+                return;
+            }
+
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max jobs for the selected characters?", "Confirm Max Jobs", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                // Max jobs
+                for (int i = 0; i < character.jobList.target.Count; i++) {
+                    character.jobList.target[i].currentProficiency = 9999;
                 }
             }
 
