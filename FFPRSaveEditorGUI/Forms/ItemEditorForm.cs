@@ -29,6 +29,34 @@ namespace FFPRSaveEditorGUI.Forms {
             this.lvItems.Sort();
         }
 
+        private void AddNOfEachItem(int count) {
+            if (MessageBox.Show($"Are you sure you want to give yourself {count} of each item?", $"Confirm Add {count}", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
+                var lvi = new ListViewItem();
+
+                OwnedItemList_Target inventoryItem = null;
+                if (!item.isKeyItem) {
+                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+
+                    if (inventoryItem == null) {
+                        inventoryItem = new OwnedItemList_Target() {
+                            contentId = item.contentId,
+                            count = count,
+                        };
+                        userData.normalOwnedItemList.target.Add(inventoryItem);
+                        userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                    } else {
+                        inventoryItem.count = count;
+                    }
+                }
+            }
+
+            UpdateDisplay();
+        }
+
         private int GetInt(string name, int value) {
             return Helpers.GetInt($"Enter the number of {name} you want", name, value, 1, 99);
         }
@@ -72,7 +100,7 @@ namespace FFPRSaveEditorGUI.Forms {
                             contentId = item.contentId,
                             count = newCount,
                         };
-                        
+
                         if (item.isKeyItem) {
                             userData.importantOwendItemList.target.Add(inventoryItem);
                         } else {
@@ -88,32 +116,12 @@ namespace FFPRSaveEditorGUI.Forms {
             }
         }
 
+        private void mnuAdd10OfEachItem_Click(object sender, EventArgs e) {
+            AddNOfEachItem(10);
+        }
+
         private void mnuAdd99OfEachItem_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("Are you sure you want to give yourself 99 of each item?", "Confirm Add 99", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
-                return;
-            }
-
-            foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
-                var lvi = new ListViewItem();
-
-                OwnedItemList_Target inventoryItem = null;
-                if (!item.isKeyItem) {
-                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
-
-                    if (inventoryItem == null) {
-                        inventoryItem = new OwnedItemList_Target() {
-                            contentId = item.contentId,
-                            count = 99,
-                        };
-                        userData.normalOwnedItemList.target.Add(inventoryItem);
-                        userData.normalOwnedItemSortIdList.target.Add(item.contentId);
-                    } else {
-                        inventoryItem.count = 99;
-                    }
-                }
-            }
-
-            UpdateDisplay();
+            AddNOfEachItem(99);
         }
 
         private void UpdateDisplay() {
