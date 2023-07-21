@@ -30,12 +30,10 @@
             chMaxHP = new ColumnHeader();
             menuStrip1 = new MenuStrip();
             charactersToolStripMenuItem = new ToolStripMenuItem();
-            mnuMaxCharacters = new ToolStripMenuItem();
-            mnuFF2 = new ToolStripMenuItem();
-            mnuFF2MaxWeapons = new ToolStripMenuItem();
-            mnuFF2MaxMagic = new ToolStripMenuItem();
-            mnuFF3 = new ToolStripMenuItem();
-            mnuFF3MaxJobs = new ToolStripMenuItem();
+            mnuMaxCharacterStats = new ToolStripMenuItem();
+            mnuMaxJobLevels = new ToolStripMenuItem();
+            mnuMaxMagicLevels = new ToolStripMenuItem();
+            mnuMaxWeaponLevels = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -91,53 +89,38 @@
             // 
             // charactersToolStripMenuItem
             // 
-            charactersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuMaxCharacters, mnuFF2, mnuFF3 });
+            charactersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuMaxCharacterStats, mnuMaxJobLevels, mnuMaxMagicLevels, mnuMaxWeaponLevels });
             charactersToolStripMenuItem.Name = "charactersToolStripMenuItem";
             charactersToolStripMenuItem.Size = new Size(95, 20);
             charactersToolStripMenuItem.Text = "&Quick Options";
             // 
-            // mnuMaxCharacters
+            // mnuMaxCharacterStats
             // 
-            mnuMaxCharacters.Name = "mnuMaxCharacters";
-            mnuMaxCharacters.Size = new Size(180, 22);
-            mnuMaxCharacters.Text = "&Max Character Stats";
-            mnuMaxCharacters.Click += mnuMaxCharacters_Click;
+            mnuMaxCharacterStats.Name = "mnuMaxCharacterStats";
+            mnuMaxCharacterStats.Size = new Size(180, 22);
+            mnuMaxCharacterStats.Text = "Max &Character Stats";
+            mnuMaxCharacterStats.Click += mnuMaxCharacterStats_Click;
             // 
-            // mnuFF2
+            // mnuMaxJobLevels
             // 
-            mnuFF2.DropDownItems.AddRange(new ToolStripItem[] { mnuFF2MaxMagic, mnuFF2MaxWeapons });
-            mnuFF2.Name = "mnuFF2";
-            mnuFF2.Size = new Size(180, 22);
-            mnuFF2.Text = "FF&2";
-            mnuFF2.Visible = false;
+            mnuMaxJobLevels.Name = "mnuMaxJobLevels";
+            mnuMaxJobLevels.Size = new Size(180, 22);
+            mnuMaxJobLevels.Text = "Max &Job Levels";
+            mnuMaxJobLevels.Click += mnuMaxJobLevels_Click;
             // 
-            // mnuFF2MaxWeapons
+            // mnuMaxMagicLevels
             // 
-            mnuFF2MaxWeapons.Name = "mnuFF2MaxWeapons";
-            mnuFF2MaxWeapons.Size = new Size(280, 22);
-            mnuFF2MaxWeapons.Text = "Max Selected Character &Weapon Levels";
-            mnuFF2MaxWeapons.Click += mnuFF2MaxWeapons_Click;
+            mnuMaxMagicLevels.Name = "mnuMaxMagicLevels";
+            mnuMaxMagicLevels.Size = new Size(180, 22);
+            mnuMaxMagicLevels.Text = "Max &Magic Levels";
+            mnuMaxMagicLevels.Click += mnuMaxMagicLevels_Click;
             // 
-            // mnuFF2MaxMagic
+            // mnuMaxWeaponLevels
             // 
-            mnuFF2MaxMagic.Name = "mnuFF2MaxMagic";
-            mnuFF2MaxMagic.Size = new Size(280, 22);
-            mnuFF2MaxMagic.Text = "Max Selected Character &Magic Levels";
-            mnuFF2MaxMagic.Click += mnuFF2MaxMagic_Click;
-            // 
-            // mnuFF3
-            // 
-            mnuFF3.DropDownItems.AddRange(new ToolStripItem[] { mnuFF3MaxJobs });
-            mnuFF3.Name = "mnuFF3";
-            mnuFF3.Size = new Size(180, 22);
-            mnuFF3.Text = "FF&3";
-            // 
-            // mnuFF3MaxJobs
-            // 
-            mnuFF3MaxJobs.Name = "mnuFF3MaxJobs";
-            mnuFF3MaxJobs.Size = new Size(224, 22);
-            mnuFF3MaxJobs.Text = "Max Selected Character &Jobs";
-            mnuFF3MaxJobs.Click += mnuFF3MaxJobs_Click;
+            mnuMaxWeaponLevels.Name = "mnuMaxWeaponLevels";
+            mnuMaxWeaponLevels.Size = new Size(180, 22);
+            mnuMaxWeaponLevels.Text = "Max &Weapon Levels";
+            mnuMaxWeaponLevels.Click += mnuMaxWeaponLevels_Click;
             // 
             // CharacterEditorForm
             // 
@@ -168,11 +151,9 @@
         private ColumnHeader chLevel;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem charactersToolStripMenuItem;
-        private ToolStripMenuItem mnuMaxCharacters;
-        private ToolStripMenuItem mnuFF2;
-        private ToolStripMenuItem mnuFF2MaxWeapons;
-        private ToolStripMenuItem mnuFF2MaxMagic;
-        private ToolStripMenuItem mnuFF3;
-        private ToolStripMenuItem mnuFF3MaxJobs;
+        private ToolStripMenuItem mnuMaxCharacterStats;
+        private ToolStripMenuItem mnuMaxJobLevels;
+        private ToolStripMenuItem mnuMaxMagicLevels;
+        private ToolStripMenuItem mnuMaxWeaponLevels;
     }
 }

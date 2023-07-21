@@ -20,8 +20,9 @@ namespace FFPRSaveEditorGUI.Forms {
             this.characters = characters;
             this.saveType = saveType;
 
-            mnuFF2.Visible = saveType.FullName.Contains("FF2");
-            mnuFF3.Visible = saveType.FullName.Contains("FF3");
+            mnuMaxJobLevels.Visible = saveType.FullName.Contains("FF3") || saveType.FullName.Contains("FF5");
+            mnuMaxMagicLevels.Visible = saveType.FullName.Contains("FF2");
+            mnuMaxWeaponLevels.Visible = saveType.FullName.Contains("FF2");
 
             AddColumns();
 
@@ -161,107 +162,12 @@ namespace FFPRSaveEditorGUI.Forms {
             UpdateDisplay();
         }
 
-        private void mnuFF2MaxMagic_Click(object sender, EventArgs e) {
-            if (!saveType.FullName.Contains("FF2")) {
-                return;
-            }
-
+        private void mnuMaxCharacterStats_Click(object sender, EventArgs e) {
             if (lvCharacters.SelectedItems.Count == 0) {
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to max magic levels for the selected characters?", "Confirm Max Magic", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
-                return;
-            }
-
-            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
-                var character = (OwnedCharacterList_Target)lvi.Tag;
-
-                // Max magic levels for equipped spells
-                for (int i = 0; i < character.abilityDictionary.values.First().target.Count; i++) {
-                    var abilityDict = character.abilityDictionary.values.First().target[i];
-
-                    // Ensure this is a magical ability (5 is level 1 fire, 644 is level 16 ultima)
-                    if ((abilityDict.abilityId >= 5) && (abilityDict.abilityId <= 644)) {
-                        var abilityList = character.abilityList.target.Single(x => x.abilityId == abilityDict.abilityId);
-
-                        // Will result in 0 for level 16, so we only adjust > 0 values
-                        var level = (abilityDict.abilityId - 4) % 16;
-                        if (level > 0) {
-                            // Calculate how many levels this spell needs to raise, then raise it
-                            int offset = 16 - level;
-
-                            abilityDict.abilityId += offset;
-                            abilityDict.contentId += offset;
-                            abilityDict.skillLevel = 860;
-
-                            abilityList.abilityId += offset;
-                            abilityList.contentId += offset;
-                            abilityList.skillLevel = 860;
-                        }
-                    }
-                }
-            }
-
-            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void mnuFF2MaxWeapons_Click(object sender, EventArgs e) {
-            if (!saveType.FullName.Contains("FF2")) {
-                return;
-            }
-
-            if (lvCharacters.SelectedItems.Count == 0) {
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to max weapon levels for the selected characters?", "Confirm Max Weapons", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
-                return;
-            }
-
-            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
-                var character = (OwnedCharacterList_Target)lvi.Tag;
-
-                // Max weapon levels
-                for (int i = 0; i < character.skillLevelTargets.values.Count; i++) {
-                    character.skillLevelTargets.values[i] = 860;
-                }
-            }
-
-            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void mnuFF3MaxJobs_Click(object sender, EventArgs e) {
-            if (!saveType.FullName.Contains("FF3")) {
-                return;
-            }
-
-            if (lvCharacters.SelectedItems.Count == 0) {
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to max jobs for the selected characters?", "Confirm Max Jobs", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
-                return;
-            }
-
-            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
-                var character = (OwnedCharacterList_Target)lvi.Tag;
-
-                // Max jobs
-                for (int i = 0; i < character.jobList.target.Count; i++) {
-                    character.jobList.target[i].currentProficiency = 9999;
-                }
-            }
-
-            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void mnuMaxCharacters_Click(object sender, EventArgs e) {
-            if (lvCharacters.SelectedItems.Count == 0) {
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to max these attributes for the selected characters?", "Confirm Max Characters", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+            if (MessageBox.Show("Are you sure you want to max the character stats?", "Confirm Max Character Stats", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
                 return;
             }
 
@@ -300,6 +206,89 @@ namespace FFPRSaveEditorGUI.Forms {
             }
 
             UpdateDisplay();
+        }
+
+        private void mnuMaxJobLevels_Click(object sender, EventArgs e) {
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max job levels?", "Confirm Max Job Levels", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                // Max jobs
+                for (int i = 0; i < character.jobList.target.Count; i++) {
+                    character.jobList.target[i].currentProficiency = 9999;
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuMaxMagicLevels_Click(object sender, EventArgs e) {
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max magic levels?", "Confirm Max Magic Levels", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                // Max magic levels for equipped spells
+                for (int i = 0; i < character.abilityDictionary.values.First().target.Count; i++) {
+                    var abilityDict = character.abilityDictionary.values.First().target[i];
+
+                    // Ensure this is a magical ability (5 is level 1 fire, 644 is level 16 ultima)
+                    if ((abilityDict.abilityId >= 5) && (abilityDict.abilityId <= 644)) {
+                        var abilityList = character.abilityList.target.Single(x => x.abilityId == abilityDict.abilityId);
+
+                        // Will result in 0 for level 16, so we only adjust > 0 values
+                        var level = (abilityDict.abilityId - 4) % 16;
+                        if (level > 0) {
+                            // Calculate how many levels this spell needs to raise, then raise it
+                            int offset = 16 - level;
+
+                            abilityDict.abilityId += offset;
+                            abilityDict.contentId += offset;
+                            abilityDict.skillLevel = 860;
+
+                            abilityList.abilityId += offset;
+                            abilityList.contentId += offset;
+                            abilityList.skillLevel = 860;
+                        }
+                    }
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuMaxWeaponLevels_Click(object sender, EventArgs e) {
+            if (lvCharacters.SelectedItems.Count == 0) {
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to max weapon levels?", "Confirm Max Weapon Levels", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            foreach (ListViewItem lvi in lvCharacters.SelectedItems) {
+                var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                // Max weapon levels
+                for (int i = 0; i < character.skillLevelTargets.values.Count; i++) {
+                    character.skillLevelTargets.values[i] = 860;
+                }
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void UpdateDisplay() {
