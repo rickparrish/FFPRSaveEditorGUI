@@ -1,6 +1,7 @@
 ﻿using FFPRSaveEditor.Common;
 using FFPRSaveEditor.Common.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class SaveGamesForm : Form {
@@ -48,9 +49,9 @@ namespace FFPRSaveEditorGUI.Forms {
                     continue;
                 }
 
-                // Load save file and decrypt
+                // Load save file and decrypt.  Only verify when running via the debugger to speed things up.
                 string encryptedData = File.ReadAllText(filename);
-                string jsonData = SaveGame.Decrypt(encryptedData);
+                string jsonData = SaveGame.Decrypt(encryptedData, Debugger.IsAttached);
 
                 // Confirm it's a save and not a settings file
                 if (jsonData.Contains("userData")) {
@@ -85,7 +86,13 @@ namespace FFPRSaveEditorGUI.Forms {
                 string filename = lv.SelectedItems[0].Tag.ToString();
 
                 string encryptedData = File.ReadAllText(filename);
-                string jsonData = SaveGame.Decrypt(encryptedData);
+                string jsonData;
+                try {
+                    jsonData = SaveGame.Decrypt(encryptedData, true);
+                } catch (InvalidDataException) {
+                    MessageBox.Show("Error loading save game.  Please contact the developers.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
                 var save = JsonConvert.DeserializeObject(jsonData, saveType);
 
                 using (var form = new UserDataForm((BaseSaveGame)save)) {
