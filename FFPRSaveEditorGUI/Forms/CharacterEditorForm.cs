@@ -112,6 +112,87 @@ namespace FFPRSaveEditorGUI.Forms {
             this.Size = new Size(100 + ((lvCharacters.Columns.Count - 1) * 75) + 50, this.Size.Height);
         }
 
+        private void AddJobAbilities(OwnedCharacterList_Target character, int jobId) {
+            if (saveType.FullName.Contains("FF5")) {
+                var abilityContentIds = new List<int>();
+
+                // From learning.csv
+                switch (jobId) {
+                    case 2:
+                        abilityContentIds.AddRange(new int[] { 345, 884, 349, 885, 343, 886, 327, });
+                        break;
+                    case 3:
+                        abilityContentIds.AddRange(new int[] { 882, 333, 883, 338, 328, 329, 330, });
+                        break;
+                    case 4:
+                        abilityContentIds.AddRange(new int[] { 947, 948, 949, 950, });
+                        break;
+                    case 5:
+                        abilityContentIds.AddRange(new int[] { 924, 925, 926, 927, 928, 929, 331, });
+                        break;
+                    case 6:
+                        abilityContentIds.AddRange(new int[] { 930, 931, 932, 933, 934, 935, 332, });
+                        break;
+                    case 7:
+                        abilityContentIds.AddRange(new int[] { 337, 880, 334, 317, 318, 320, });
+                        break;
+                    case 8:
+                        abilityContentIds.AddRange(new int[] { 889, 890, 344, 891, 335,  });
+                        break;
+                    case 9:
+                        abilityContentIds.AddRange(new int[] { 895, 896, 324, 897, });
+                        break;
+                    case 10:
+                        abilityContentIds.AddRange(new int[] { 909, 346, 347, });
+                        break;
+                    case 11:
+                        abilityContentIds.AddRange(new int[] { 887, 888, 321, });
+                        break;
+                    case 12:
+                        abilityContentIds.AddRange(new int[] { 911, 326, 914, });
+                        break;
+                    case 13:
+                        abilityContentIds.AddRange(new int[] { 942, 943, 944, 945, 946, 898, });
+                        break;
+                    case 14:
+                        abilityContentIds.AddRange(new int[] { 342, 323, });
+                        break;
+                    case 15:
+                        abilityContentIds.AddRange(new int[] { 892, 893, 339, 322, 894, });
+                        break;
+                    case 16:
+                        abilityContentIds.AddRange(new int[] { 936, 937, 938, 939, 940, 941, 348, });
+                        break;
+                    case 17:
+                        abilityContentIds.AddRange(new int[] { 336, 905, 906, 907, 908, });
+                        break;
+                    case 18:
+                        abilityContentIds.AddRange(new int[] { 915, 916, 319, });
+                        break;
+                    case 19:
+                        abilityContentIds.AddRange(new int[] { 899, 340, 951, 900, });
+                        break;
+                    case 20:
+                        abilityContentIds.AddRange(new int[] { 341, 918, 919, 920, 921, 922, 923, });
+                        break;
+                    case 21:
+                        abilityContentIds.AddRange(new int[] { 901, 902, 325, 903, });
+                        break;
+                    case 22:
+                        abilityContentIds.AddRange(new int[] { 917, });
+                        break;
+                }
+
+                if (abilityContentIds.Any()) {
+                    foreach (int id in abilityContentIds) {
+                        if (!character.learningAbilitys.target.Contains(id)) {
+                            character.learningAbilitys.target.Add(id);
+                        }
+                    }
+                }
+            }
+        }
+
         private int GetInt(string column, string name, int value, int min = 0, int max = int.MaxValue) {
             return Helpers.GetInt($"Enter a new {column} for {name}", column, value, min, max);
         }
@@ -223,6 +304,9 @@ namespace FFPRSaveEditorGUI.Forms {
                 // Max jobs
                 for (int i = 0; i < character.jobList.target.Count; i++) {
                     character.jobList.target[i].currentProficiency = 9999;
+
+                    // In FF5 each job level adds abilities, which the game doesn't add automatically if you cheat
+                    AddJobAbilities(character, character.jobList.target[i].id);
                 }
             }
 
