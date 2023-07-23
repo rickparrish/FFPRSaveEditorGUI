@@ -7,7 +7,7 @@
         public bool isKeyItem { get; set; }
     }
 
-    public class NormalItems {
+    public class Items {
         public static Item GetItem(int contentId, Type saveType) {
             Item item = null;
 
