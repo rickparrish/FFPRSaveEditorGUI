@@ -34,6 +34,7 @@
             mnuMaxJobLevels = new ToolStripMenuItem();
             mnuMaxMagicLevels = new ToolStripMenuItem();
             mnuMaxWeaponLevels = new ToolStripMenuItem();
+            mnuAddAllMagic = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             // 
             // charactersToolStripMenuItem
             // 
-            charactersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuMaxCharacterStats, mnuMaxJobLevels, mnuMaxMagicLevels, mnuMaxWeaponLevels });
+            charactersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuAddAllMagic, mnuMaxCharacterStats, mnuMaxJobLevels, mnuMaxMagicLevels, mnuMaxWeaponLevels });
             charactersToolStripMenuItem.Name = "charactersToolStripMenuItem";
             charactersToolStripMenuItem.Size = new Size(95, 20);
             charactersToolStripMenuItem.Text = "&Quick Options";
@@ -121,6 +122,13 @@
             mnuMaxWeaponLevels.Size = new Size(180, 22);
             mnuMaxWeaponLevels.Text = "Max &Weapon Levels";
             mnuMaxWeaponLevels.Click += mnuMaxWeaponLevels_Click;
+            // 
+            // mnuAddAllMagic
+            // 
+            mnuAddAllMagic.Name = "mnuAddAllMagic";
+            mnuAddAllMagic.Size = new Size(180, 22);
+            mnuAddAllMagic.Text = "Add All Magic";
+            mnuAddAllMagic.Click += mnuAddAllMagic_Click;
             // 
             // CharacterEditorForm
             // 
@@ -155,5 +163,6 @@
         private ToolStripMenuItem mnuMaxJobLevels;
         private ToolStripMenuItem mnuMaxMagicLevels;
         private ToolStripMenuItem mnuMaxWeaponLevels;
+        private ToolStripMenuItem mnuAddAllMagic;
     }
 }

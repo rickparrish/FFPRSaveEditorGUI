@@ -8,18 +8,24 @@ using System.Data;
 namespace FFPRSaveEditorGUI.Forms {
     public partial class CharacterEditorForm : Form {
         private List<OwnedCharacterList_Target> characters;
+        private BaseSaveGame save;
         private Type saveType;
+        private UserData userData;
 
         public CharacterEditorForm() {
             InitializeComponent();
         }
 
-        public CharacterEditorForm(List<OwnedCharacterList_Target> characters, Type saveType) {
+        public CharacterEditorForm(BaseSaveGame save) {
             InitializeComponent();
 
-            this.characters = characters;
-            this.saveType = saveType;
+            this.save = save;
+            this.saveType = save.GetType();
 
+            this.userData = ((dynamic)save).userData;
+            this.characters = userData.ownedCharacterList.target;
+
+            mnuAddAllMagic.Visible = saveType.FullName.Contains("FF5");
             mnuMaxJobLevels.Visible = saveType.FullName.Contains("FF3") || saveType.FullName.Contains("FF5");
             mnuMaxMagicLevels.Visible = saveType.FullName.Contains("FF2");
             mnuMaxWeaponLevels.Visible = saveType.FullName.Contains("FF2");
@@ -137,7 +143,7 @@ namespace FFPRSaveEditorGUI.Forms {
                         abilityContentIds.AddRange(new int[] { 337, 880, 334, 317, 318, 320, });
                         break;
                     case 8:
-                        abilityContentIds.AddRange(new int[] { 889, 890, 344, 891, 335,  });
+                        abilityContentIds.AddRange(new int[] { 889, 890, 344, 891, 335, });
                         break;
                     case 9:
                         abilityContentIds.AddRange(new int[] { 895, 896, 324, 897, });
@@ -241,6 +247,43 @@ namespace FFPRSaveEditorGUI.Forms {
             }
 
             UpdateDisplay();
+        }
+
+        private void mnuAddAllMagic_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Are you sure you want to add all magic?", "Confirm Add All Magic", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+                return;
+            }
+
+            if (saveType.FullName.Contains("FF5")) {
+                foreach (var magic in Magics.GetMagics(saveType)) {
+                    if (!userData.ownedMagicList.target.Contains(magic.contentId)) {
+                        userData.ownedMagicList.target.Add(magic.contentId);
+                    }
+                    if (!userData.learnedAbilityList.target.Contains(magic.abilityId)) {
+                        userData.learnedAbilityList.target.Add(magic.abilityId);
+                    }
+                    foreach (ListViewItem lvi in lvCharacters.Items) {
+                        var character = (OwnedCharacterList_Target)lvi.Tag;
+
+                        // Add magic
+                        if (!character.abilityList.target.Any(x => x.contentId == magic.contentId)) {
+                            character.abilityList.target.Add(new AbilityList_Target() {
+                                abilityId = magic.abilityId,
+                                contentId = magic.contentId,
+                                skillLevel = 0, // Not used in FF5
+                            });
+                        }
+                        if (!character.additionOrderOwnedAbilityIds.target.Contains(magic.contentId)) {
+                            // Name says AbilityIds but game seems to store ContentIds
+                            character.additionOrderOwnedAbilityIds.target.Add(magic.contentId);
+                        }
+                    }
+                }
+            } else {
+                MessageBox.Show("Not Implemented Yet");
+            }
+
+            MessageBox.Show("Success!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void mnuMaxCharacterStats_Click(object sender, EventArgs e) {

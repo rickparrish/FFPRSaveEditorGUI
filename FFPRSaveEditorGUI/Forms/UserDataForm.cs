@@ -19,7 +19,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void cmdCharacterEditor_Click(object sender, EventArgs e) {
-            using (var form = new CharacterEditorForm(userData.ownedCharacterList.target, save.GetType())) {
+            using (var form = new CharacterEditorForm(save)) {
                 form.ShowDialog();
             }
         }
