@@ -34,7 +34,7 @@ namespace FFPRSaveEditorGUI.Forms {
                 return;
             }
 
-            foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
+            foreach (var item in Items.GetItems(save.GetType()).Where(x => x.name != "None")) {
                 var lvi = new ListViewItem();
 
                 OwnedItemList_Target inventoryItem = null;
@@ -127,7 +127,7 @@ namespace FFPRSaveEditorGUI.Forms {
         private void UpdateDisplay() {
             lvItems.Items.Clear();
 
-            foreach (var item in NormalItems.GetItems(save.GetType()).Where(x => x.name != "None")) {
+            foreach (var item in Items.GetItems(save.GetType()).Where(x => x.name != "None")) {
                 var lvi = new ListViewItem();
 
                 OwnedItemList_Target inventoryItem = null;
