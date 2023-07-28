@@ -55,7 +55,7 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 // Confirm it's a save and not a settings file
                 if (jsonData.Contains("userData")) {
-                    var save = JsonConvert.DeserializeObject<BaseSaveGame2>(jsonData);
+                    var save = JsonConvert.DeserializeObject<BaseSaveGame>(jsonData);
 
                     var lvi = new ListViewItem();
 
@@ -85,21 +85,17 @@ namespace FFPRSaveEditorGUI.Forms {
             if (lv.SelectedItems.Count > 0) {
                 string filename = lv.SelectedItems[0].Tag.ToString();
 
-                string encryptedData = File.ReadAllText(filename);
-                string jsonData;
+                BaseSaveGame save;
                 try {
-                    jsonData = SaveGame.Decrypt(encryptedData, true);
+                    save = SaveGame.Load(filename, true);
                 } catch (InvalidDataException) {
                     MessageBox.Show("Error loading save game.  Please contact the developers.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
-                var save = JsonConvert.DeserializeObject(jsonData, saveType);
 
-                using (var form = new UserDataForm((BaseSaveGame)save)) {
+                using (var form = new UserDataForm(save)) {
                     if (form.ShowDialog() == DialogResult.OK) {
-                        jsonData = JsonConvert.SerializeObject(save);
-                        encryptedData = SaveGame.Encrypt(jsonData);
-                        File.WriteAllText(filename, encryptedData);
+                        SaveGame.Save(filename, save);
                     }
                 }
             }
