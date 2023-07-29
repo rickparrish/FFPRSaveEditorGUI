@@ -10,7 +10,6 @@ namespace FFPRSaveEditorGUI.Forms {
         private List<OwnedCharacterList_Target> characters;
         private BaseSaveGame save;
         private Type saveType;
-        private UserData userData;
 
         public CharacterEditorForm() {
             InitializeComponent();
@@ -22,8 +21,7 @@ namespace FFPRSaveEditorGUI.Forms {
             this.save = save;
             this.saveType = save.GetType();
 
-            this.userData = ((dynamic)save).userData;
-            this.characters = userData.ownedCharacterList.target;
+            this.characters = save.userData.ownedCharacterList.target;
 
             mnuAddAllMagic.Visible = saveType.FullName.Contains("FF5");
             mnuMaxJobLevels.Visible = saveType.FullName.Contains("FF3") || saveType.FullName.Contains("FF5");
@@ -256,11 +254,11 @@ namespace FFPRSaveEditorGUI.Forms {
 
             if (saveType.FullName.Contains("FF5")) {
                 foreach (var magic in Magics.GetMagics(saveType)) {
-                    if (!userData.ownedMagicList.target.Contains(magic.contentId)) {
-                        userData.ownedMagicList.target.Add(magic.contentId);
+                    if (!save.userData.ownedMagicList.target.Contains(magic.contentId)) {
+                        save.userData.ownedMagicList.target.Add(magic.contentId);
                     }
-                    if (!userData.learnedAbilityList.target.Contains(magic.abilityId)) {
-                        userData.learnedAbilityList.target.Add(magic.abilityId);
+                    if (!save.userData.learnedAbilityList.target.Contains(magic.abilityId)) {
+                        save.userData.learnedAbilityList.target.Add(magic.abilityId);
                     }
                     foreach (ListViewItem lvi in lvCharacters.Items) {
                         var character = (OwnedCharacterList_Target)lvi.Tag;

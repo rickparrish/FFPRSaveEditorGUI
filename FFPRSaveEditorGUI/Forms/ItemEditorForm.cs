@@ -5,7 +5,6 @@ namespace FFPRSaveEditorGUI.Forms {
     public partial class ItemEditorForm : Form {
         private ListViewColumnSorter columnSorter;
         private BaseSaveGame save;
-        private UserData userData;
 
         public ItemEditorForm() {
             InitializeComponent();
@@ -20,7 +19,6 @@ namespace FFPRSaveEditorGUI.Forms {
             this.lvItems.ListViewItemSorter = columnSorter;
 
             this.save = save;
-            this.userData = ((dynamic)save).userData;
 
             UpdateDisplay();
 
@@ -39,15 +37,15 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 OwnedItemList_Target inventoryItem = null;
                 if (!item.isKeyItem) {
-                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
 
                     if (inventoryItem == null) {
                         inventoryItem = new OwnedItemList_Target() {
                             contentId = item.contentId,
                             count = count,
                         };
-                        userData.normalOwnedItemList.target.Add(inventoryItem);
-                        userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                        save.userData.normalOwnedItemList.target.Add(inventoryItem);
+                        save.userData.normalOwnedItemSortIdList.target.Add(item.contentId);
                     } else {
                         inventoryItem.count = count;
                     }
@@ -86,9 +84,9 @@ namespace FFPRSaveEditorGUI.Forms {
                 OwnedItemList_Target inventoryItem = null;
 
                 if (item.isKeyItem) {
-                    inventoryItem = userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
                 } else {
-                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
                 }
 
                 int oldCount = inventoryItem == null ? 0 : inventoryItem.count;
@@ -102,10 +100,10 @@ namespace FFPRSaveEditorGUI.Forms {
                         };
 
                         if (item.isKeyItem) {
-                            userData.importantOwendItemList.target.Add(inventoryItem);
+                            save.userData.importantOwendItemList.target.Add(inventoryItem);
                         } else {
-                            userData.normalOwnedItemList.target.Add(inventoryItem);
-                            userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                            save.userData.normalOwnedItemList.target.Add(inventoryItem);
+                            save.userData.normalOwnedItemSortIdList.target.Add(item.contentId);
                         }
                     } else {
                         inventoryItem.count = newCount;
@@ -132,9 +130,9 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 OwnedItemList_Target inventoryItem = null;
                 if (item.isKeyItem) {
-                    inventoryItem = userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
                 } else {
-                    inventoryItem = userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
                 }
 
                 lvi.Tag = item;
