@@ -43,6 +43,18 @@ namespace FFPRSaveEditorGUI.Forms {
             lvSaveGames.LargeImageList = il;
 
             foreach (var filename in filenames) {
+                // Skip non-game files
+                if (filename.EndsWith("2E4HxIyL+Mvaahk1GRNNOgKrO4vDSSm72kHLbVt71hg=")) {
+                    // Not sure what this file is
+                    continue;
+                } else if (filename.EndsWith("dp3fS2vqP7GDj8eF72YKqbT7FIAF=e7Shy2CsTITm2E=")) {
+                    // Visitted locations and monster kill counts
+                    continue;
+                } else if (filename.EndsWith("V=SfwyU31ksiHpTxO7Rg2aBJrA18kSKvtF4jvDB4hRE=")) {
+                    // Settings file
+                    continue;
+                }
+
                 // Skip this file if we only want to show the autosave and quicksave
                 bool shouldLoad = loadAll || filename.EndsWith("7nCxyzTwG31W3Zlg70mo751W8ETH1n+Km0dWOzRU84Y=") || filename.EndsWith("Rl18osV3e9kPX9SMWQj8mqShFpTUmu1lf6Mb=FVVfqk=");
                 if (!shouldLoad) {
@@ -50,33 +62,27 @@ namespace FFPRSaveEditorGUI.Forms {
                 }
 
                 // Load save file and decrypt.  Only verify when running via the debugger to speed things up.
-                string encryptedData = File.ReadAllText(filename);
-                string jsonData = SaveGame.Decrypt(encryptedData, Debugger.IsAttached);
+                var save = SaveGame.Load(filename, Debugger.IsAttached);
 
-                // Confirm it's a save and not a settings file
-                if (jsonData.Contains("userData")) {
-                    var save = JsonConvert.DeserializeObject<BaseSaveGame>(jsonData);
+                var lvi = new ListViewItem();
 
-                    var lvi = new ListViewItem();
+                lvi.Tag = filename;
 
-                    lvi.Tag = filename;
-
-                    if (save.id == 21) {
-                        lvi.Text = "Autosave";
-                    } else if (save.id == 22) {
-                        lvi.Text = "File 00 (Quick Save)";
-                    } else {
-                        lvi.Text = $"File {save.id:D2}";
-                    }
-
-                    lvi.SubItems.Add(save.timeStamp);
-                    lvi.SubItems.Add($"Play Time: {Helpers.SecToHMS(save.userData.playTime)}");
-
-                    lvi.ImageIndex = il.Images.Count;
-                    il.Images.Add(Image.FromStream(new MemoryStream(Convert.FromBase64String(save.pictureData))));
-
-                    lvSaveGames.Items.Add(lvi);
+                if (save.id == 21) {
+                    lvi.Text = "Autosave";
+                } else if (save.id == 22) {
+                    lvi.Text = "File 00 (Quick Save)";
+                } else {
+                    lvi.Text = $"File {save.id:D2}";
                 }
+
+                lvi.SubItems.Add(save.timeStamp);
+                lvi.SubItems.Add($"Play Time: {Helpers.SecToHMS(save.userData.playTime)}");
+
+                lvi.ImageIndex = il.Images.Count;
+                il.Images.Add(Image.FromStream(new MemoryStream(Convert.FromBase64String(save.pictureData))));
+
+                lvSaveGames.Items.Add(lvi);
             }
         }
 
