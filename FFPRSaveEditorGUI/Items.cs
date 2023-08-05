@@ -8,42 +8,13 @@
     }
 
     public class Items {
-        public static Item GetItem(int contentId, Type saveType) {
-            Item item = null;
-
-            if (saveType.FullName.Contains("FF1")) {
-                item = FF1Items.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF2")) {
-                item = FF2Items.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF3")) {
-                item = FF3Items.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF4")) {
-                item = FF4Items.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF5")) {
-                item = FF5Items.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF6")) {
-                item = FF6Items.SingleOrDefault(x => x.contentId == contentId);
-            }
-
+        public static Item GetItem(int contentId, int version) {
+            Item item = AllItems[version].SingleOrDefault(x => x.contentId == contentId);
             return item != null ? item : new Item() { contentId = contentId, name = $"Unknown Item #{contentId:d3}", description = "Unknown", type = "Unknown" };
         }
 
-        public static List<Item> GetItems(Type saveType) {
-            if (saveType.FullName.Contains("FF1")) {
-                return FF1Items;
-            } else if (saveType.FullName.Contains("FF2")) {
-                return FF2Items;
-            } else if (saveType.FullName.Contains("FF3")) {
-                return FF3Items;
-            } else if (saveType.FullName.Contains("FF4")) {
-                return FF4Items;
-            } else if (saveType.FullName.Contains("FF5")) {
-                return FF5Items;
-            } else if (saveType.FullName.Contains("FF6")) {
-                return FF6Items;
-            }
-
-            return null;
+        public static List<Item> GetItems(int version) {
+            return AllItems[version];
         }
 
         #region Item Classes
@@ -1362,5 +1333,14 @@
             new Item() { contentId = 329, name = "Sprint Shoes", type = "Armor - Relic", description = "Shoes enchanted to make the wearer move faster. Double walking speed.", isKeyItem = false },
         };
         #endregion
+
+        private static Dictionary<int, List<Item>> AllItems = new Dictionary<int, List<Item>>() {
+            { 1, FF1Items },
+            { 2, FF2Items },
+            { 3, FF3Items },
+            { 4, FF4Items },
+            { 5, FF5Items },
+            { 6, FF6Items },
+        };
     }
 }

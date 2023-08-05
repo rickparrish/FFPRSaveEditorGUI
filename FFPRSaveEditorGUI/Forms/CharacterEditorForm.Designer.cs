@@ -63,19 +63,19 @@
             // 
             // chLevel
             // 
-            chLevel.Tag = "addtionalLevel";
+            chLevel.Tag = "Level";
             chLevel.Text = "Level";
             chLevel.Width = 75;
             // 
             // chExperience
             // 
-            chExperience.Tag = "currentExp";
+            chExperience.Tag = "Experience";
             chExperience.Text = "Experience";
             chExperience.Width = 75;
             // 
             // chMaxHP
             // 
-            chMaxHP.Tag = "addtionalMaxHp";
+            chMaxHP.Tag = "HitPointsMax";
             chMaxHP.Text = "Max HP";
             chMaxHP.Width = 75;
             // 

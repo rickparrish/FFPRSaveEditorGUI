@@ -8,42 +8,13 @@
     }
 
     public class Magics {
-        public static Magic GetMagic(int contentId, int abilityId, Type saveType) {
-            Magic magic = null;
-
-            if (saveType.FullName.Contains("FF1")) {
-                // TODOX magic = FF1Magics.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF2")) {
-                // TODOX magic = FF2Magics.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF3")) {
-                // TODOX magic = FF3Magics.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF4")) {
-                // TODOX magic = FF4Magics.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF5")) {
-                magic = FF5Magics.SingleOrDefault(x => x.contentId == contentId);
-            } else if (saveType.FullName.Contains("FF6")) {
-                // TODOX magic = FF6Magics.SingleOrDefault(x => x.contentId == contentId);
-            }
-
+        public static Magic GetMagic(int contentId, int abilityId, int version) {
+            Magic magic = AllMagics[version].SingleOrDefault(x => x.contentId == contentId);
             return magic != null ? magic : new Magic() { contentId = contentId, abilityId = abilityId, name = $"Unknown Magic #{contentId:d3}", description = "Unknown", type = "Unknown" };
         }
 
-        public static List<Magic> GetMagics(Type saveType) {
-            if (saveType.FullName.Contains("FF1")) {
-                // TODOX return FF1Magics;
-            } else if (saveType.FullName.Contains("FF2")) {
-                // TODOX return FF2Magics;
-            } else if (saveType.FullName.Contains("FF3")) {
-                // TODOX return FF3Magics;
-            } else if (saveType.FullName.Contains("FF4")) {
-                // TODOX return FF4Magics;
-            } else if (saveType.FullName.Contains("FF5")) {
-                return FF5Magics;
-            } else if (saveType.FullName.Contains("FF6")) {
-                // TODOX return FF6Magics;
-            }
-
-            return null;
+        public static List<Magic> GetMagics(int version) {
+            return AllMagics[version];
         }
 
         #region Magic Classes
@@ -269,5 +240,14 @@
             new Magic() { contentId = 822, abilityId = 556, name = "Sword Dance", type = "Magic - Dance", description = "" },
         };
         #endregion
+
+        private static Dictionary<int, List<Magic>> AllMagics = new Dictionary<int, List<Magic>>() {
+            // { 1, FF1Magics },
+            // { 2, FF2Magics },
+            // { 3, FF3Magics },
+            // { 4, FF4Magics },
+            { 5, FF5Magics },
+            // { 6, FF6Magics },
+        };
     }
 }

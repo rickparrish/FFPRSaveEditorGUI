@@ -13,17 +13,16 @@ namespace FFPRSaveEditorGUI.Forms {
         public ItemEditorForm(BaseSaveGame save) {
             InitializeComponent();
 
-            // Create an instance of a ListView column sorter and assign it
-            // to the ListView control.
-            columnSorter = new ListViewColumnSorter();
-            this.lvItems.ListViewItemSorter = columnSorter;
-
             this.save = save;
 
             UpdateDisplay();
 
+            // Create an instance of a ListView column sorter and assign it
+            // to the ListView control.
+            columnSorter = new ListViewColumnSorter();
             columnSorter.Order = SortOrder.Ascending;
             columnSorter.SortColumn = 0;
+            this.lvItems.ListViewItemSorter = columnSorter;
             this.lvItems.Sort();
         }
 
@@ -32,20 +31,20 @@ namespace FFPRSaveEditorGUI.Forms {
                 return;
             }
 
-            foreach (var item in Items.GetItems(save.GetType()).Where(x => x.name != "None")) {
+            foreach (var item in Items.GetItems(save.Version).Where(x => x.name != "None")) {
                 var lvi = new ListViewItem();
 
                 OwnedItemList_Target inventoryItem = null;
                 if (!item.isKeyItem) {
-                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.Items.SingleOrDefault(x => x.contentId == item.contentId);
 
                     if (inventoryItem == null) {
                         inventoryItem = new OwnedItemList_Target() {
                             contentId = item.contentId,
                             count = count,
                         };
-                        save.userData.normalOwnedItemList.target.Add(inventoryItem);
-                        save.userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                        save.Items.Add(inventoryItem);
+                        save.SortedItemIds.Add(item.contentId);
                     } else {
                         inventoryItem.count = count;
                     }
@@ -84,9 +83,9 @@ namespace FFPRSaveEditorGUI.Forms {
                 OwnedItemList_Target inventoryItem = null;
 
                 if (item.isKeyItem) {
-                    inventoryItem = save.userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.KeyItems.SingleOrDefault(x => x.contentId == item.contentId);
                 } else {
-                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.Items.SingleOrDefault(x => x.contentId == item.contentId);
                 }
 
                 int oldCount = inventoryItem == null ? 0 : inventoryItem.count;
@@ -100,10 +99,10 @@ namespace FFPRSaveEditorGUI.Forms {
                         };
 
                         if (item.isKeyItem) {
-                            save.userData.importantOwendItemList.target.Add(inventoryItem);
+                            save.KeyItems.Add(inventoryItem);
                         } else {
-                            save.userData.normalOwnedItemList.target.Add(inventoryItem);
-                            save.userData.normalOwnedItemSortIdList.target.Add(item.contentId);
+                            save.Items.Add(inventoryItem);
+                            save.SortedItemIds.Add(item.contentId);
                         }
                     } else {
                         inventoryItem.count = newCount;
@@ -125,14 +124,14 @@ namespace FFPRSaveEditorGUI.Forms {
         private void UpdateDisplay() {
             lvItems.Items.Clear();
 
-            foreach (var item in Items.GetItems(save.GetType()).Where(x => x.name != "None")) {
+            foreach (var item in Items.GetItems(save.Version).Where(x => x.name != "None")) {
                 var lvi = new ListViewItem();
 
                 OwnedItemList_Target inventoryItem = null;
                 if (item.isKeyItem) {
-                    inventoryItem = save.userData.importantOwendItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.KeyItems.SingleOrDefault(x => x.contentId == item.contentId);
                 } else {
-                    inventoryItem = save.userData.normalOwnedItemList.target.SingleOrDefault(x => x.contentId == item.contentId);
+                    inventoryItem = save.Items.SingleOrDefault(x => x.contentId == item.contentId);
                 }
 
                 lvi.Tag = item;

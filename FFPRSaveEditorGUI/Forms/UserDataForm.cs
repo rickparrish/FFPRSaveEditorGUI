@@ -3,7 +3,6 @@
 namespace FFPRSaveEditorGUI.Forms {
     public partial class UserDataForm : Form {
         private BaseSaveGame save;
-        private UserData userData;
 
         public UserDataForm() {
             InitializeComponent();
@@ -13,7 +12,6 @@ namespace FFPRSaveEditorGUI.Forms {
             InitializeComponent();
 
             this.save = save;
-            this.userData = ((dynamic)save).userData;
             
             UpdateDisplay();
         }
@@ -31,18 +29,18 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void lblGil_Click(object sender, EventArgs e) {
-            userData.owendGil = Helpers.GetInt("Enter a new Gil/Gold amount", "Gil/Gold", userData.owendGil);
+            save.Gold = Helpers.GetInt("Enter a new Gold amount", "Gold", save.Gold);
             UpdateDisplay();
         }
 
         private void UpdateDisplay() {
-            this.Text = save.GetType().Name.Substring(0, 3) + " - ";
+            this.Text = $"Final Fantasy {save.Version} - ";
 
-            pbScreen.BackgroundImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(save.pictureData)));
+            pbScreen.BackgroundImage = save.Thumbnail;
 
-            if (save.id == 21) {
+            if (save.IsAutosave) {
                 lblSaveId.Text = "Autosave";
-            } else if (save.id == 22) {
+            } else if (save.IsQuickSave) {
                 lblSaveId.Text = "File 00 (Quick Save)";
             } else {
                 lblSaveId.Text = $"File {save.id:D2}";
@@ -50,9 +48,9 @@ namespace FFPRSaveEditorGUI.Forms {
             this.Text += lblSaveId.Text;
     
             lblTimeStamp.Text = save.timeStamp;
-            lblPlayTime.Text = $"Play Time: {Helpers.SecToHMS(userData.playTime)}";
+            lblPlayTime.Text = $"Play Time: {Helpers.SecToHMS(save.PlayTimeInSeconds)}";
 
-            lblGil.Text = userData.owendGil.ToString("n0");
+            lblGil.Text = save.Gold.ToString("n0");
             // TODOX Maybe add these values a display only stats:
             //       owendCrystalFlags
             //       escapeCount

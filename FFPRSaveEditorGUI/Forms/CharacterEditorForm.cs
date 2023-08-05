@@ -7,9 +7,7 @@ using System.Data;
 
 namespace FFPRSaveEditorGUI.Forms {
     public partial class CharacterEditorForm : Form {
-        private List<OwnedCharacterList_Target> characters;
         private BaseSaveGame save;
-        private Type saveType;
 
         public CharacterEditorForm() {
             InitializeComponent();
@@ -19,14 +17,11 @@ namespace FFPRSaveEditorGUI.Forms {
             InitializeComponent();
 
             this.save = save;
-            this.saveType = save.GetType();
 
-            this.characters = save.userData.ownedCharacterList.target;
-
-            mnuAddAllMagic.Visible = saveType.FullName.Contains("FF5");
-            mnuMaxJobLevels.Visible = saveType.FullName.Contains("FF3") || saveType.FullName.Contains("FF5");
-            mnuMaxMagicLevels.Visible = saveType.FullName.Contains("FF2");
-            mnuMaxWeaponLevels.Visible = saveType.FullName.Contains("FF2");
+            mnuAddAllMagic.Visible = save.Version == 5;
+            mnuMaxJobLevels.Visible = save.Version == 3 || save.Version == 5;
+            mnuMaxMagicLevels.Visible = save.Version == 2;
+            mnuMaxWeaponLevels.Visible = save.Version == 2;
 
             AddColumns();
 
@@ -36,72 +31,55 @@ namespace FFPRSaveEditorGUI.Forms {
         private void AddColumns() {
             var columns = new OrderedDictionary();
 
-            if (saveType.FullName.Contains("FF1")) {
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Intellect", "addtionalIntelligence");
-                columns.Add("Luck", "addtionalLuck");
-                columns.Add("Accuracy", "addtionalAccuracyRate");
-                columns.Add("Evasion", "addtionalEvasionRate");
-                columns.Add("Magic", "addtionalMagic");
-                columns.Add("Spirit", "addtionalSpirit");
-            } else if (saveType.FullName.Contains("FF2")) {
-                columns.Add("Max MP", "addtionalMaxMp");
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Spirit", "addtionalSpirit");
-                columns.Add("Intellect", "addtionalIntelligence");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Magic", "addtionalMagic");
-            } else if (saveType.FullName.Contains("FF3")) {
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Intellect", "addtionalIntelligence");
-                columns.Add("Spirit", "addtionalSpirit");
-            } else if (saveType.FullName.Contains("FF4")) {
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Intellect", "addtionalIntelligence");
-                columns.Add("Spirit", "addtionalSpirit");
-            } else if (saveType.FullName.Contains("FF5")) {
-                columns.Add("Max MP", "addtionalMaxMp");
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Magic", "addtionalMagic");
-            } else if (saveType.FullName.Contains("FF6")) {
-                columns.Add("Max MP", "addtionalMaxMp");
-                columns.Add("Strength", "addtionalPower");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Stamina", "addtionalVitality");
-                columns.Add("Magic", "addtionalMagic");
-            } else {
-                columns.Add("MaxMp", "addtionalMaxMp");
-                columns.Add("Power", "addtionalPower");
-                columns.Add("Vitality", "addtionalVitality");
-                columns.Add("Agility", "addtionalAgility");
-                columns.Add("Weight", "addionalWeight");
-                columns.Add("Intelligence", "addtionalIntelligence");
-                columns.Add("Spirit", "addtionalSpirit");
-                columns.Add("Attack", "addtionalAttack");
-                columns.Add("Defense", "addtionalDefense");
-                columns.Add("AbilityDefense", "addtionalAbilityDefense");
-                columns.Add("AbilityEvasionRate", "addtionalAbilityEvasionRate");
-                columns.Add("Magic", "addtionalMagic");
-                columns.Add("Luck", "addtionalLuck");
-                columns.Add("AccuracyRate", "addtionalAccuracyRate");
-                columns.Add("EvasionRate", "addtionalEvasionRate");
-                columns.Add("AbilityDisturbedRate", "addtionalAbilityDisturbedRate");
-                columns.Add("CriticalRate", "addtionalCriticalRate");
-                columns.Add("DamageDirmeter", "addtionalDamageDirmeter");
-                columns.Add("AbilityDefenseRate", "addtionalAbilityDefenseRate");
-                columns.Add("AccuracyCount", "addtionalAccuracyCount");
-                columns.Add("EvasionCount", "addtionalEvasionCount");
-                columns.Add("DefenseCount", "addtionalDefenseCount");
-                columns.Add("MagicDefenseCount", "addtionalMagicDefenseCount");
+            switch (save.Version) {
+                case 1:
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Intellect", "Intellect");
+                    columns.Add("Luck", "Luck");
+                    columns.Add("Accuracy", "Accuracy");
+                    columns.Add("Evasion", "Evasion");
+                    columns.Add("Magic", "Magic");
+                    columns.Add("Spirit", "Spirit");
+                    break;
+                case 2:
+                    columns.Add("Max MP", "MagicPointsMax");
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Spirit", "Spirit");
+                    columns.Add("Intellect", "Intellect");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Magic", "Magic");
+                    break;
+                case 3:
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Intellect", "Intellect");
+                    columns.Add("Spirit", "Spirit");
+                    break;
+                case 4:
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Intellect", "Intellect");
+                    columns.Add("Spirit", "Spirit");
+                    break;
+                case 5:
+                    columns.Add("Max MP", "MagicPointsMax");
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Magic", "Magic");
+                    break;
+                case 6:
+                    columns.Add("Max MP", "MagicPointsMax");
+                    columns.Add("Strength", "Strength");
+                    columns.Add("Agility", "Agility");
+                    columns.Add("Stamina", "Stamina");
+                    columns.Add("Magic", "Magic");
+                    break;
             }
 
             foreach (DictionaryEntry column in columns) {
@@ -117,7 +95,7 @@ namespace FFPRSaveEditorGUI.Forms {
         }
 
         private void AddJobAbilities(OwnedCharacterList_Target character, int jobId) {
-            if (saveType.FullName.Contains("FF5")) {
+            if (save.Version == 5) {
                 var abilityContentIds = new List<int>();
 
                 // From learning.csv
@@ -189,8 +167,8 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 if (abilityContentIds.Any()) {
                     foreach (int id in abilityContentIds) {
-                        if (!character.learningAbilitys.target.Contains(id)) {
-                            character.learningAbilitys.target.Add(id);
+                        if (!character.JobAbilityContentIds.Contains(id)) {
+                            character.JobAbilityContentIds.Add(id);
                         }
                     }
                 }
@@ -217,27 +195,27 @@ namespace FFPRSaveEditorGUI.Forms {
                 case "name":
                     character.name = Helpers.GetString($"Enter a new {column.Text} for {character.name}", column.Text, character.name);
                     break;
-                case "currentExp":
-                    character.currentExp = GetInt(column.Text, character.name, character.currentExp, 0, 9999999);
+                case "Experience":
+                    character.Experience = GetInt(column.Text, character.name, character.Experience, 0, 9999999);
                     break;
-                case "addtionalLevel":
+                case "Level":
                     MessageBox.Show("Level is read-only and can be adjusted by changing the Experience instead", "Level", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
-                case "addtionalMaxHp":
-                    character.parameter.addtionalMaxHp = GetInt(column.Text, character.name, character.parameter.addtionalMaxHp, 1, 9999);
-                    character.parameter.currentHP = character.parameter.addtionalMaxHp;
+                case "HitPointsMax":
+                    character.HitPointsMax = GetInt(column.Text, character.name, character.HitPointsMax, 1, 9999);
+                    character.HitPoints = character.HitPointsMax;
                     break;
-                case "addtionalMaxMp":
-                    character.parameter.addtionalMaxMp = GetInt(column.Text, character.name, character.parameter.addtionalMaxMp, 0, 999);
-                    character.parameter.currentMP = character.parameter.addtionalMaxMp;
+                case "MagicPointsMax":
+                    character.MagicPointsMax = GetInt(column.Text, character.name, character.MagicPointsMax, 0, 999);
+                    character.MagicPoints = character.MagicPointsMax;
                     break;
                 default:
                     try {
-                        var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
-                        int oldValue = (int)pi.GetValue(character.parameter);
+                        var pi = character.GetType().GetProperty(column.Tag.ToString());
+                        int oldValue = (int)pi.GetValue(character);
 
                         int newValue = GetInt(column.Text, character.name, oldValue, 0, 255);
-                        pi.SetValue(character.parameter, newValue);
+                        pi.SetValue(character, newValue);
                     } catch (Exception ex) {
                         MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
@@ -252,28 +230,27 @@ namespace FFPRSaveEditorGUI.Forms {
                 return;
             }
 
-            if (saveType.FullName.Contains("FF5")) {
-                foreach (var magic in Magics.GetMagics(saveType)) {
-                    if (!save.userData.ownedMagicList.target.Contains(magic.contentId)) {
-                        save.userData.ownedMagicList.target.Add(magic.contentId);
+            if (save.Version == 5) {
+                foreach (var magic in Magics.GetMagics(save.Version)) {
+                    if (!save.Magics.Contains(magic.contentId)) {
+                        save.Magics.Add(magic.contentId);
                     }
-                    if (!save.userData.learnedAbilityList.target.Contains(magic.abilityId)) {
-                        save.userData.learnedAbilityList.target.Add(magic.abilityId);
+                    if (!save.Abilities.Contains(magic.abilityId)) {
+                        save.Abilities.Add(magic.abilityId);
                     }
                     foreach (ListViewItem lvi in lvCharacters.Items) {
                         var character = (OwnedCharacterList_Target)lvi.Tag;
 
                         // Add magic
-                        if (!character.abilityList.target.Any(x => x.contentId == magic.contentId)) {
-                            character.abilityList.target.Add(new AbilityList_Target() {
+                        if (!character.Abilities.Any(x => x.contentId == magic.contentId)) {
+                            character.Abilities.Add(new AbilityList_Target() {
                                 abilityId = magic.abilityId,
                                 contentId = magic.contentId,
                                 skillLevel = 0, // Not used in FF5
                             });
                         }
-                        if (!character.additionOrderOwnedAbilityIds.target.Contains(magic.contentId)) {
-                            // Name says AbilityIds but game seems to store ContentIds
-                            character.additionOrderOwnedAbilityIds.target.Add(magic.contentId);
+                        if (!character.AbilityContentIds.Contains(magic.contentId)) {
+                            character.AbilityContentIds.Add(magic.contentId);
                         }
                     }
                 }
@@ -301,24 +278,24 @@ namespace FFPRSaveEditorGUI.Forms {
                         case "name":
                             // Do not modify
                             break;
-                        case "currentExp":
-                            character.currentExp = 9999999;
+                        case "Experience":
+                            character.Experience = 9999999;
                             break;
-                        case "addtionalLevel":
+                        case "Level":
                             // Do not modify
                             break;
-                        case "addtionalMaxHp":
-                            character.parameter.addtionalMaxHp = 9999;
-                            character.parameter.currentHP = character.parameter.addtionalMaxHp;
+                        case "HitPointsMax":
+                            character.HitPointsMax = 9999;
+                            character.HitPoints = character.HitPointsMax;
                             break;
-                        case "addtionalMaxMp":
-                            character.parameter.addtionalMaxMp = 999;
-                            character.parameter.currentMP = character.parameter.addtionalMaxMp;
+                        case "MagicPointsMax":
+                            character.MagicPointsMax = 999;
+                            character.MagicPoints = character.MagicPointsMax;
                             break;
                         default:
                             try {
-                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
-                                pi.SetValue(character.parameter, 255);
+                                var pi = character.GetType().GetProperty(column.Tag.ToString());
+                                pi.SetValue(character, 255);
                             } catch (Exception ex) {
                                 MessageBox.Show($"Unexpected tag in column header: '{column.Tag}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             }
@@ -343,11 +320,11 @@ namespace FFPRSaveEditorGUI.Forms {
                 var character = (OwnedCharacterList_Target)lvi.Tag;
 
                 // Max jobs
-                for (int i = 0; i < character.jobList.target.Count; i++) {
-                    character.jobList.target[i].currentProficiency = 9999;
+                for (int i = 0; i < character.Jobs.Count; i++) {
+                    character.Jobs[i].currentProficiency = 9999;
 
                     // In FF5 each job level adds abilities, which the game doesn't add automatically if you cheat
-                    AddJobAbilities(character, character.jobList.target[i].id);
+                    AddJobAbilities(character, character.Jobs[i].id);
                 }
             }
 
@@ -372,7 +349,7 @@ namespace FFPRSaveEditorGUI.Forms {
 
                     // Ensure this is a magical ability (5 is level 1 fire, 644 is level 16 ultima)
                     if ((abilityDict.abilityId >= 5) && (abilityDict.abilityId <= 644)) {
-                        var abilityList = character.abilityList.target.Single(x => x.abilityId == abilityDict.abilityId);
+                        var abilityList = character.Abilities.Single(x => x.abilityId == abilityDict.abilityId);
 
                         // Will result in 0 for level 16, so we only adjust > 0 values
                         var level = (abilityDict.abilityId - 4) % 16;
@@ -419,7 +396,7 @@ namespace FFPRSaveEditorGUI.Forms {
         private void UpdateDisplay() {
             lvCharacters.Items.Clear();
 
-            foreach (var character in characters.Where(x => x.isEnableCorps)) {
+            foreach (var character in save.PartyMembers) {
                 var lvi = new ListViewItem();
 
                 lvi.Tag = character;
@@ -436,13 +413,13 @@ namespace FFPRSaveEditorGUI.Forms {
                         case "name":
                             // Do nothing, name is already added as lvi.Text
                             break;
-                        case "currentExp":
-                            lvi.SubItems.Add(character.currentExp.ToString("n0"));
+                        case "Experience":
+                            lvi.SubItems.Add(character.Experience.ToString("n0"));
                             break;
                         default:
                             try {
-                                var pi = character.parameter.GetType().GetProperty(column.Tag.ToString());
-                                lvi.SubItems.Add(((int)pi.GetValue(character.parameter)).ToString("n0"));
+                                var pi = character.GetType().GetProperty(column.Tag.ToString());
+                                lvi.SubItems.Add(((int)pi.GetValue(character)).ToString("n0"));
                             } catch (Exception ex) {
                                 throw new Exception($"Unexpected tag in column header: '{column.Tag}'");
                             }

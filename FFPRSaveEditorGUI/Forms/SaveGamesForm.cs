@@ -68,19 +68,19 @@ namespace FFPRSaveEditorGUI.Forms {
 
                 lvi.Tag = filename;
 
-                if (save.id == 21) {
+                if (save.IsAutosave) {
                     lvi.Text = "Autosave";
-                } else if (save.id == 22) {
+                } else if (save.IsQuickSave) {
                     lvi.Text = "File 00 (Quick Save)";
                 } else {
                     lvi.Text = $"File {save.id:D2}";
                 }
 
                 lvi.SubItems.Add(save.timeStamp);
-                lvi.SubItems.Add($"Play Time: {Helpers.SecToHMS(save.userData.playTime)}");
+                lvi.SubItems.Add($"Play Time: {Helpers.SecToHMS(save.PlayTimeInSeconds)}");
 
                 lvi.ImageIndex = il.Images.Count;
-                il.Images.Add(Image.FromStream(new MemoryStream(Convert.FromBase64String(save.pictureData))));
+                il.Images.Add(save.Thumbnail);
 
                 lvSaveGames.Items.Add(lvi);
             }
